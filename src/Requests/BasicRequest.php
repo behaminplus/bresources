@@ -1,6 +1,6 @@
 <?php
 
-namespace BResources\Requests;
+namespace Behamin\BResources\Requests;
 
 use BResources\Resources\BasicResource;
 use Illuminate\Foundation\Http\FormRequest;

@@ -1,6 +1,6 @@
 <?php
 
-namespace BResources\Resources;
+namespace Behamin\BResources\Resources;
 
 class BasicCollectionResource extends BasicResource
 {

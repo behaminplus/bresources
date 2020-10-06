@@ -1,6 +1,6 @@
 <?php
 
-namespace BResources\Resources;
+namespace Behamin\BResources\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use stdClass;
