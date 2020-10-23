@@ -1,0 +1,23 @@
+<?php
+
+namespace {{ namespace }};
+
+use Behamin\BResources\Resources\BasicResource;
+
+class {{ class }} extends BasicResource
+{
+    public function __construct($resource)
+    {
+        parent::__construct($resource);
+        if (count(get_object_vars($this->data)) > 0) {
+            $this->data = $this->getArray($this->data);
+        }
+    }
+
+    public function getArray($resource)
+    {
+        return [
+            //
+        ];
+    }
+}
