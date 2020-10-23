@@ -2,7 +2,7 @@
 
 namespace Behamin\BResources\Requests;
 
-use BResources\Resources\BasicResource;
+use Behamin\BResources\Resources\BasicResource;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;

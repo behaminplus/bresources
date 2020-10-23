@@ -8,10 +8,7 @@ class {{ class }} extends BasicResource
 {
     public function __construct($resource, $byPass = false)
     {
-        parent::__construct($resource);
-        if (!$byPass and count(get_object_vars($this->data)) > 0) {
-            $this->data = $this->getArray($this->data);
-        }
+        parent::__construct($resource, $byPass);
     }
 
     public function getArray($resource)

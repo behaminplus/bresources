@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class MakeBResourceCollectionCommand extends GeneratorCommand
 {
-    protected $signature = 'make:bcresource {name}';
+    protected $name = 'make:bcresource';
     protected $type = "BResourceCollection";
 
     protected function getStub()
