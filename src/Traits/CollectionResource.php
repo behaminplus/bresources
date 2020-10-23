@@ -3,31 +3,31 @@ namespace Behamin\BResources\Traits;
 
 trait CollectionResource
 {
-    public function __construct($collectionResource, $byPass = false)
+    public function __construct($collectionResource, $transform = true)
     {
-        parent::__construct($collectionResource, true);
+        parent::__construct($collectionResource, false);
 
-        if (! $byPass) {
-            $this->reData();
+        if ($transform) {
+            $this->transformData();
         } else {
-            $this->reDataByPass();
+            $this->getData();
         }
     }
 
-    protected function reDataByPass()
-    {
-        $this->data = [
-            'items' => $this['data'],
-            'count' => $this->count
-        ];
-    }
-
-    protected function reData()
+    protected function transformData()
     {
         $this->data = [
             'items' => $this['data']->transform(function ($item) {
                 return $this->getArray($item);
             }),
+            'count' => $this->count
+        ];
+    }
+
+    protected function getData()
+    {
+        $this->data = [
+            'items' => $this['data'],
             'count' => $this->count
         ];
     }

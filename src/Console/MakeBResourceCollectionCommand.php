@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 class MakeBResourceCollectionCommand extends GeneratorCommand
 {
     protected $name = 'make:bcresource';
-    protected $type = "BResourceCollection";
+    protected $type = 'BResourceCollection';
     protected $extendsClass = 'BasicResourceCollection';
     protected $use = 'use Behamin\BResources\Resources\BasicResourceCollection;';
 
@@ -27,7 +27,7 @@ class MakeBResourceCollectionCommand extends GeneratorCommand
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the collection resource class.'],
+            ['name', InputArgument::REQUIRED, 'The name of the resource collection class.'],
         ];
     }
 
