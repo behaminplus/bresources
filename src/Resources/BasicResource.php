@@ -34,9 +34,4 @@ class BasicResource extends JsonResource
             ]
         ];
     }
-
-    public function getArray($resource)
-    {
-        return $resource;
-    }
 }

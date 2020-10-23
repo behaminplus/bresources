@@ -6,9 +6,9 @@ use Behamin\BResources\Resources\BasicResource;
 
 class {{ class }} extends BasicResource
 {
-    public function __construct($resource, $transform = true)
+    public function __construct($resource, $byPass = false)
     {
-        parent::__construct($resource, $transform);
+        parent::__construct($resource, true);
     }
 
     public function getArray($resource)
