@@ -4,9 +4,27 @@ namespace Behamin\BResources\Resources;
 
 class BasicResourceCollection extends BasicResource
 {
-    public function __construct($resource)
+    public function __construct($collectionResource, $byPass = false)
     {
-        parent::__construct($resource);
+        parent::__construct($collectionResource, true);
+
+        if (! $byPass) {
+            $this->reData();
+        } else {
+            $this->reDataByPass();
+        }
+    }
+
+    protected function reDataByPass()
+    {
+        $this->data = [
+            'items' => $this['data'],
+            'count' => $this->count
+        ];
+    }
+
+    protected function reData()
+    {
         $this->data = [
             'items' => $this['data']->transform(function ($item) {
                 return $this->getArray($item);

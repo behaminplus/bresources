@@ -6,8 +6,8 @@ use Behamin\BResources\Resources\BasicResourceCollection;
 
 class {{ class }} extends BasicResourceCollection
 {
-    public function __construct($resource)
+    public function __construct($resource, $byPass = false)
     {
-        parent::__construct($resource);
+        parent::__construct($resource, $byPass);
     }
 }

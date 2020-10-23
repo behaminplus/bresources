@@ -8,7 +8,7 @@ class {{ class }} extends BasicResource
 {
     public function __construct($resource, $byPass = false)
     {
-        parent::__construct($resource);
+        parent::__construct($resource, $byPass);
     }
 
     public function getArray($resource)
