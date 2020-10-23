@@ -7,8 +7,8 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class MakeBRequestCommand extends GeneratorCommand
 {
-    protected $signature = 'make:brequest {name}';
-    protected $type = "BRequest";
+    protected $name = 'make:brequest';
+    protected $type = 'BRequest';
 
     protected function getStub()
     {
