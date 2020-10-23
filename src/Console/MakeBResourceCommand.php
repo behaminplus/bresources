@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 class MakeBResourceCommand extends GeneratorCommand
 {
     protected $name = 'make:bresource';
-    protected $type = "BResource";
+    protected $type = 'BResource';
 
     protected function getStub()
     {
@@ -52,7 +52,7 @@ class MakeBResourceCommand extends GeneratorCommand
     protected function getOptions()
     {
         return [
-            ['collection', 'c', InputOption::VALUE_NONE, 'with creation collection resource'],
+            ['collection', 'c', InputOption::VALUE_NONE, 'with resource collection creation'],
         ];
     }
 }
