@@ -6,7 +6,7 @@ use Behamin\BResources\Resources\BasicResource;
 
 class {{ class }} extends BasicResource
 {
-    public function __construct($resource, $byPass = false)
+    public function __construct($resource)
     {
         parent::__construct($resource, true);
     }
