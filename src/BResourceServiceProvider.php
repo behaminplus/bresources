@@ -11,6 +11,7 @@ class BResourceServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 '\Behamin\BResources\Console\MakeBResourceCommand',
+                '\Behamin\BResources\Console\MakeBResourceCollectionCommand',
                 '\Behamin\BResources\Console\MakeBRequestCommand'
             ]);
         }

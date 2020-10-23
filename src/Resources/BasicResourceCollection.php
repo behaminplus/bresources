@@ -2,7 +2,7 @@
 
 namespace Behamin\BResources\Resources;
 
-class BasicCollectionResource extends BasicResource
+class BasicResourceCollection extends BasicResource
 {
     public function __construct($resource)
     {

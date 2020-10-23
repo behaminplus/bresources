@@ -8,15 +8,14 @@ composer require behamin/bresources
 ```   
 
 ## Usage
- In a near future <br>
  for create bresources standard response this artisan command
  
- Basic Resource
+create Resource
  ```
 php artisan make:bresource
 ```
 
-Basic Collection Resource
+with Resource Collection
 ```
 php artisan make:bresource name --collection
 ```
