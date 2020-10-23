@@ -8,8 +8,8 @@ class BasicResourceCollection extends BasicResource
     {
         parent::__construct($resource);
         $this->data = [
-            'items' => $this['data']->transform(function ($user) {
-                return $this->getArr($user);
+            'items' => $this['data']->transform(function ($item) {
+                return $this->getArray($item);
             }),
             'count' => $this->count
         ];
