@@ -2,14 +2,13 @@
 
 namespace Behamin\BResources\Console;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
 class MakeBResourceCollectionCommand extends GeneratorCommand
 {
     protected $name = 'make:bcresource';
-    protected $type = "BResourceCollection";
+    protected $type = 'BResourceCollection';
 
     protected function getStub()
     {
@@ -24,7 +23,7 @@ class MakeBResourceCollectionCommand extends GeneratorCommand
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the collection resource class.'],
+            ['name', InputArgument::REQUIRED, 'The name of the resource collection class.'],
         ];
     }
 }
