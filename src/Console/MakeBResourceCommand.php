@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 class MakeBResourceCommand extends GeneratorCommand
 {
-    protected $signature = 'make:bresource {name} {--collection=: with creation collection resource}';
+    protected $name = 'make:bresource';
     protected $type = "BResource";
 
     protected function getStub()
@@ -20,6 +20,25 @@ class MakeBResourceCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace . '\Http\Resources';
+    }
+
+
+    public function handle()
+    {
+        parent::handle();
+
+        if ($this->option('collection')) {
+            $this->createResourceCollection();
+        }
+    }
+
+    protected function createResourceCollection()
+    {
+        $ResourceName = Str::studly($this->argument('name'));
+
+        $this->call('make:bcresource', [
+            'name' => $ResourceName . 'Collection',
+        ]);
     }
 
     protected function getArguments()
@@ -34,38 +53,5 @@ class MakeBResourceCommand extends GeneratorCommand
         return [
             ['collection', 'c', InputOption::VALUE_NONE, 'with creation collection resource'],
         ];
-    }
-
-    public function handle()
-    {
-        parent::handle();
-
-        if ($this->hasOption('collection')) {
-            $this->createResourceCollection();
-        }
-    }
-
-    protected function createResourceCollection()
-    {
-        $ResourceCollectionName = Str::studly($this->getResourceCollectionName());
-
-        $this->call('make:bcresource', [
-            'name' => $ResourceCollectionName,
-        ]);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getResourceCollectionName()
-    {
-        $name = $this->argument('name');
-
-        $hasResourceWordEnd = preg_match('/resource$/i', $name, $match);
-        if ($hasResourceWordEnd) {
-            return Str::replaceArray($match[0], [''], $name) . 'Resource' . 'Collection';
-        }
-
-        return $name . 'Collection';
     }
 }
