@@ -6,14 +6,14 @@ use Illuminate\Support\Str;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
-class MakeBCollectionResourceCommand extends GeneratorCommand
+class MakeBResourceCollectionCommand extends GeneratorCommand
 {
     protected $signature = 'make:bcresource {name}';
-    protected $type = "BCollectionResource";
+    protected $type = "BResourceCollection";
 
     protected function getStub()
     {
-        return __DIR__ . '/stubs/collection-resource.stub';
+        return __DIR__ . '/stubs/resource-collection.stub';
     }
 
     protected function getDefaultNamespace($rootNamespace)

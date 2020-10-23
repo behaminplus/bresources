@@ -41,29 +41,29 @@ class MakeBResourceCommand extends GeneratorCommand
         parent::handle();
 
         if ($this->hasOption('collection')) {
-            $this->createCollectionRecourse();
+            $this->createResourceCollection();
         }
     }
 
-    protected function createCollectionRecourse()
+    protected function createResourceCollection()
     {
-        $collectionResourceName = Str::studly($this->getCollectionResourceName());
+        $ResourceCollectionName = Str::studly($this->getResourceCollectionName());
 
         $this->call('make:bcresource', [
-            'name' => $collectionResourceName,
+            'name' => $ResourceCollectionName,
         ]);
     }
 
     /**
      * @return string
      */
-    protected function getCollectionResourceName()
+    protected function getResourceCollectionName()
     {
         $name = $this->argument('name');
 
         $hasResourceWordEnd = preg_match('/resource$/i', $name, $match);
         if ($hasResourceWordEnd) {
-            return Str::replaceArray($match[0], [''], $name) . 'Collection' . 'Resource';
+            return Str::replaceArray($match[0], [''], $name) . 'Resource' . 'Collection';
         }
 
         return $name . 'Collection';
