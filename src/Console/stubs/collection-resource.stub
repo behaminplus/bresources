@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }};
+
+use Behamin\BResources\Resources\BasicCollectionResource;
+
+class {{ class }} extends BasicCollectionResource
+{
+    public function __construct($resource)
+    {
+        parent::__construct($resource);
+    }
+
+
+}
