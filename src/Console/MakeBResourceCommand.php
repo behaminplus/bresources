@@ -34,10 +34,10 @@ class MakeBResourceCommand extends GeneratorCommand
 
     protected function createResourceCollection()
     {
-        $ResourceName = Str::studly($this->argument('name'));
+        $resourceName = Str::studly($this->argument('name'));
 
         $this->call('make:bcresource', [
-            'name' => $ResourceName . 'Collection',
+            'name' => $resourceName . 'Collection',
         ]);
     }
 
