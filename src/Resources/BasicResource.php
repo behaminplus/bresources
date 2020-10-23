@@ -9,7 +9,7 @@ class BasicResource extends JsonResource
 {
     protected $data, $message, $error_message, $errors, $count;
 
-    public function __construct($resource)
+    public function __construct($resource, $byPass = false)
     {
         parent::__construct($resource);
         $this->data = isset($this['data']) ? $this['data'] : new stdClass();
@@ -17,6 +17,10 @@ class BasicResource extends JsonResource
         $this->message = isset($this['message']) ? $this['message'] : null;
         $this->error_message = isset($this['error_message']) ? $this['error_message'] : null;
         $this->errors = isset($this['errors']) ? $this['errors'] : null;
+
+        if (!$byPass and count(get_object_vars($this->data)) > 0) {
+            $this->data = $this->getArray($this->data);
+        }
     }
 
     public function toArray($request)

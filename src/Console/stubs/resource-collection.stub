@@ -10,6 +10,4 @@ class {{ class }} extends BasicResourceCollection
     {
         parent::__construct($resource);
     }
-
-
 }
