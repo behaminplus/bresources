@@ -1,5 +1,22 @@
 # Behamin Resources
 
-implement standard formats on api responses   
+standard formats on api responses
 
-#### usage and other document `Coming soon`
+## Install
+```
+composer require behamin/bresources
+```   
+
+## Usage
+ In a near future <br>
+ for create bresources standard response this artisan command
+ 
+ Basic Resource
+ ```
+php artisan make:bresource
+```
+
+Basic Collection Resource
+```
+php artisan make:bresource name --collection
+```
