@@ -3,6 +3,7 @@
     "description": "Behamin basic and standard api response format for laravel",
     "keywords": [
         "behamin",
+        "request",
         "resource",
         "laravel",
         "package",
@@ -33,7 +34,7 @@
         }
     },
     "require": {
-        "php": "~7.3",
+        "php": "^7.3",
         "laravel/framework": "~6.0|~7.0|~8.0"
     },
     "minimum-stability": "dev",
