@@ -6,8 +6,15 @@ use Behamin\BResources\Resources\BasicResourceCollection;
 
 class {{ class }} extends BasicResourceCollection
 {
-    public function __construct($resourceCollection, $byPass = false)
+    public function __construct($resourceCollection)
     {
-        parent::__construct($resourceCollection, $byPass);
+        parent::__construct($resourceCollection, true);
+    }
+
+    public function getArray($resource)
+    {
+        return [
+            //
+        ];
     }
 }
