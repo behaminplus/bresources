@@ -38,7 +38,6 @@ class MakeBResourceCommand extends GeneratorCommand
 
         $this->call('make:bcresource', [
             'name' => $resourceName . 'Collection',
-            '--extends' => $resourceName
         ]);
     }
 
