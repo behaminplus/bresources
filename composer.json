@@ -21,6 +21,13 @@
             "Behamin\\BResources\\": "src/"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Behamin\\BResources\\BResourceServiceProvider"
+            ]
+        }
+    },
     "require": {
         "php": "~7.3",
         "laravel/framework": "~6.0|~7.0|~8.0"
