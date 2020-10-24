@@ -3,7 +3,7 @@ namespace Behamin\BResources\Traits;
 
 trait CollectionResource
 {
-    public function __construct($collectionResource, $transform = true)
+    public function __construct($collectionResource, $transform = false)
     {
         parent::__construct($collectionResource, false);
 
