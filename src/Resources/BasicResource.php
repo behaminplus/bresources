@@ -18,9 +18,19 @@ class BasicResource extends JsonResource
         $this->error_message = isset($this['error_message']) ? $this['error_message'] : null;
         $this->errors = isset($this['errors']) ? $this['errors'] : null;
 
-        if ($transform and count(get_object_vars($this->data)) > 0) {
+        if ($transform and $this->isObjectVars()) {
             $this->data = $this->getArray($this->data);
         }
+    }
+
+    public function isObjectVars()
+    {
+        $hasVars = count(get_object_vars($this->data)) > 0;
+
+        if (!$hasVars && (is_array($this['data']) || is_object($this['data'])) && count($this['data']) > 0) {
+            $hasVars = true;
+        }
+        return $hasVars;
     }
 
     public function toArray($request)

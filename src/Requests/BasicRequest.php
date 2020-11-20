@@ -6,6 +6,7 @@ use Behamin\BResources\Resources\BasicResource;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\DB;
 
 class BasicRequest extends FormRequest
 {
