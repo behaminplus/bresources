@@ -17,5 +17,5 @@ php artisan make:bresource
 
 with Resource Collection
 ```
-php artisan make:bresource name --collection
+php artisan make:bcresource name
 ```

@@ -13,7 +13,7 @@ class BasicResourceCollection extends BasicResource
         } else {
             $this->data = [
                 'items' => $this['data'],
-                'count' => isset($this->count) ? $this->count : count($this->data)
+                'count' => $this->count ?? count($this->data)
             ];
         }
     }
@@ -24,7 +24,7 @@ class BasicResourceCollection extends BasicResource
             'items' => $this['data']->transform(function ($item) {
                 return $this->getArray($item);
             }),
-            'count' => isset($this->count) ? $this->count : count($this->data)
+            'count' => $this->count ?? count($this->data)
         ];
     }
 }

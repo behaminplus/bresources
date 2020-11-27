@@ -11,7 +11,7 @@ class {{ class }} extends BasicResource
         parent::__construct($resource, true);
     }
 
-    public function getArray($resource)
+    protected function getArray($resource)
     {
         return [
             //
