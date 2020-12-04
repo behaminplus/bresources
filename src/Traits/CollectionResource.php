@@ -9,6 +9,7 @@ trait CollectionResource
         parent::__construct($collectionResource, false);
 
         if ($transform) {
+            $this->transform = $transform;
             $this->transformData();
         } else {
             $this->getData();

@@ -3,11 +3,12 @@
 namespace Behamin\BResources\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 use stdClass;
 
 class BasicResource extends JsonResource
 {
-    protected $data, $message, $error_message, $errors, $count;
+    protected $data, $message, $error_message, $errors, $count, $transform;
 
     public function __construct($resource, $transform = false)
     {
@@ -19,6 +20,7 @@ class BasicResource extends JsonResource
         $this->errors = isset($this['errors']) ? $this['errors'] : null;
 
         if ($transform and $this->isObjectVars()) {
+            $this->transform = $transform;
             $this->data = $this->getArray($this->data);
         }
     }
@@ -47,6 +49,20 @@ class BasicResource extends JsonResource
 
     public function getArray($resource)
     {
-        return $resource;
+        $transform = $this->transform;
+
+        if (is_bool($transform))
+            return  $resource;
+
+        if (is_string($transform))
+        {
+            $transform = [$transform];
+        }
+        if (is_array($resource)){
+            return Arr::pluck($resource, $transform);
+        } else{
+            return data_get($resource, $transform);
+        }
+
     }
 }
