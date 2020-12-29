@@ -4,10 +4,9 @@ namespace Behamin\BResources\Resources;
 
 class BasicResourceCollection extends BasicResource
 {
-    public function __construct($collectionResource, $transform = false)
+    public function __construct($resourceCollection, $transform = false)
     {
-        parent::__construct($collectionResource);
-
+        parent::__construct($resourceCollection);
         if ($transform) {
             $this->transformData();
         } else {
