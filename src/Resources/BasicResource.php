@@ -7,13 +7,14 @@ use stdClass;
 
 class BasicResource extends JsonResource
 {
-    protected $data, $message, $error_message, $errors, $count;
+    protected $data, $message, $error_message, $errors, $count, $sum;
 
     public function __construct($resource, $transform = false)
     {
         parent::__construct($resource);
         $this->data = $this['data'] ?? new stdClass();
         $this->count = $this['count'] ?? null;
+        $this->sum = $this['sum'] ?? null;
         $this->message = $this['message'] ?? null;
         $this->error_message = $this['error_message'] ?? null;
         $this->errors = $this['errors'] ?? null;
