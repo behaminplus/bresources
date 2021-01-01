@@ -34,6 +34,7 @@ class BasicRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response(new BasicResource([
+            'error_message' => 'خطا در اطلاعات ورودی',
             'errors' => $validator->errors()
         ]), 422));
     }
