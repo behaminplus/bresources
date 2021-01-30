@@ -10,12 +10,21 @@ composer require behamin/bresources
 ## Usage
  for create bresources standard response this artisan command
  
-create Resource
+#### create Resource
  ```
 php artisan make:bresource
 ```
 
-with Resource Collection
+#### with Resource Collection
 ```
 php artisan make:bresource name --collection
+```
+
+#### create Resource Collection
+ ```
+php artisan make:bresource RescourceNameCollection
+```
+#### also or
+```
+php artisan make:bcresource RescourceNameCollection
 ```

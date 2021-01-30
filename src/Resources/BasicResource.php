@@ -8,16 +8,17 @@ use stdClass;
 
 class BasicResource extends JsonResource
 {
-    protected $data, $message, $error_message, $errors, $count, $transform;
+    protected $data, $message, $error_message, $errors, $count, $sum, $transform;
 
     public function __construct($resource, $transform = false)
     {
         parent::__construct($resource);
-        $this->data = isset($this['data']) ? $this['data'] : new stdClass();
-        $this->count = isset($this['count']) ? $this['count'] : null;
-        $this->message = isset($this['message']) ? $this['message'] : null;
-        $this->error_message = isset($this['error_message']) ? $this['error_message'] : null;
-        $this->errors = isset($this['errors']) ? $this['errors'] : null;
+        $this->data = $this['data'] ?? new stdClass();
+        $this->count = $this['count'] ?? null;
+        $this->sum = $this['sum'] ?? null;
+        $this->message = $this['message'] ?? null;
+        $this->error_message = $this['error_message'] ?? null;
+        $this->errors = $this['errors'] ?? null;
 
         if ($transform and $this->isObjectVars()) {
             $this->transform = $transform;
@@ -47,22 +48,24 @@ class BasicResource extends JsonResource
         ];
     }
 
-    public function getArray($resource)
+    protected function getArray($resource)
     {
-        $transform = $this->transform;
+        if (is_bool($this->transform)) {
+            if (method_exists($resource, 'toArray')) {
+                return $resource->toArray();
+            } else {
+                return get_object_vars($resource);
+            }
+        }
 
-        if (is_bool($transform))
-            return  $resource;
-
-        if (is_string($transform))
+        if (is_string($this->transform))
         {
-            $transform = [$transform];
+            $transform = [$this->transform];
         }
         if (is_array($resource)){
             return Arr::pluck($resource, $transform);
         } else{
             return data_get($resource, $transform);
         }
-
     }
 }

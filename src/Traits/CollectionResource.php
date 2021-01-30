@@ -22,7 +22,8 @@ trait CollectionResource
             'items' => $this['data']->transform(function ($item) {
                 return $this->getArray($item);
             }),
-            'count' => $this->count
+            'count' => $this->count ?? count($this->data),
+            'sum' => $this->sum
         ];
     }
 
@@ -30,7 +31,8 @@ trait CollectionResource
     {
         $this->data = [
             'items' => $this['data'],
-            'count' => $this->count
+            'count' => $this->count ?? count($this->data),
+            'sum' => $this->sum
         ];
     }
 }

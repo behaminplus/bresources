@@ -2,7 +2,6 @@
 
 namespace Behamin\BResources\Console;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
