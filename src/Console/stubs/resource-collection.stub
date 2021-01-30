@@ -7,5 +7,5 @@ use Behamin\BResources\Traits\CollectionResource;
 
 class {{ class }} extends {{ extends }}
 {
-   use CollectionResource;
+   {{ useTrait }}
 }

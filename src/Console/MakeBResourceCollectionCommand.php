@@ -13,6 +13,7 @@ class MakeBResourceCollectionCommand extends GeneratorCommand
     protected $type = 'BResourceCollection';
     protected $extendsClass = 'BasicResourceCollection';
     protected $use = 'use Behamin\BResources\Resources\BasicResourceCollection;';
+    protected $useTrait = 'use CollectionResource;';
 
     protected function getStub()
     {
@@ -52,8 +53,24 @@ class MakeBResourceCollectionCommand extends GeneratorCommand
         if ($this->option('extends') && is_string($this->option('extends'))) {
             $this->extendsClass = $this->option('extends');
             $this->use = '';
+        } else {
+            $this->useTrait = <<<EOF
+    public function __construct(\$resourceCollection)
+    {
+        parent::__construct(\$resourceCollection, false);
+    }
+
+    public function getArray(\$resource)
+    {
+        return [
+            //
+        ];
+    }
+EOF;
         }
+
         $stub = str_replace(['{{ extends }}', '{{extends}}'], $this->extendsClass, $stub);
+        $stub = str_replace(['{{ useTrait }}', '{{useTrait}}'], $this->useTrait, $stub);
         return str_replace(['{{ use }}', '{{use}}'], $this->use, $stub);
     }
 }
