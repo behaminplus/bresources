@@ -28,12 +28,15 @@ class BasicResource extends JsonResource
 
     public function isObjectVars()
     {
-        $hasVars = count(get_object_vars($this->data)) > 0;
-
-        if (!$hasVars && (is_array($this['data']) || is_object($this['data'])) && count($this['data']) > 0) {
-            $hasVars = true;
+        if (is_object($this->data) && count(get_object_vars($this->data)) > 0){
+            return true;
         }
-        return $hasVars;
+
+        if (is_array($this->data) && count($this['data']) > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     public function toArray($request)
@@ -62,10 +65,15 @@ class BasicResource extends JsonResource
         {
             $transform = [$this->transform];
         }
-        if (is_array($resource)){
-            return Arr::pluck($resource, $transform);
-        } else{
-            return data_get($resource, $transform);
+
+        $data = [];
+        foreach ($this->transform as $key) {
+            if (is_array($resource)) {
+                $data[$key] = $resource[$key];
+            } else {
+                $data[$key] = data_get($resource, $key);
+            }
         }
+        return $data;
     }
 }

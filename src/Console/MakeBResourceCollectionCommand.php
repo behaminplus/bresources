@@ -51,7 +51,7 @@ class MakeBResourceCollectionCommand extends GeneratorCommand
 
         if ($this->option('extends') && is_string($this->option('extends'))) {
             $this->extendsClass = $this->option('extends');
-            $this->use = '';
+            $this->use = 'use Behamin\BResources\Traits\CollectionResource;';
         } else {
             $this->useTrait = <<<EOF
     public function __construct(\$resourceCollection)
