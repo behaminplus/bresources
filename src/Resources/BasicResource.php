@@ -61,13 +61,13 @@ class BasicResource extends JsonResource
             }
         }
 
-        if (is_string($this->transform))
-        {
-            $transform = [$this->transform];
+        $transform = is_string($this->transform) ? [$this->transform] : $this->transform;
+        if (! is_array($transform)){
+            return $resource;
         }
 
         $data = [];
-        foreach ($this->transform as $key) {
+        foreach ($transform as $key) {
             if (is_array($resource)) {
                 $data[$key] = $resource[$key];
             } else {
