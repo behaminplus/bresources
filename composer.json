@@ -26,6 +26,11 @@
             "Behamin\\BResources\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Behamin\\BResources\\Tests\\": "tests/"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
