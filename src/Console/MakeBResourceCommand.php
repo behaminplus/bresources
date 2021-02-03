@@ -25,6 +25,11 @@ class MakeBResourceCommand extends GeneratorCommand
 
     public function handle()
     {
+        if ($this->isCollectionResName()){
+            $this->createResourceCollection(false);
+            return true;
+        }
+
         parent::handle();
 
         if ($this->option('collection')) {
@@ -32,13 +37,22 @@ class MakeBResourceCommand extends GeneratorCommand
         }
     }
 
-    protected function createResourceCollection()
+    protected function createResourceCollection($withResource = true )
     {
         $resourceName = Str::studly($this->argument('name'));
+        $resourceName = $this->isCollectionResName() ?  $resourceName : $resourceName . 'Collection';
+        $arguments = [
+            'name' => $resourceName
+        ];
+        if ($withResource){
+            $arguments['--extends'] = Str::replaceLast('Collection', '', $resourceName);
+        }
 
-        $this->call('make:bcresource', [
-            'name' => $resourceName . 'Collection',
-        ]);
+        $this->call('make:bcresource', $arguments);
+    }
+
+    protected function isCollectionResName(){
+        return preg_match('/.+collection$/i',  $this->argument('name'));
     }
 
     protected function getArguments()

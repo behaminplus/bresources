@@ -2,19 +2,9 @@
 
 namespace {{ namespace }};
 
-use Behamin\BResources\Resources\BasicResourceCollection;
+{{ use }}
 
-class {{ class }} extends BasicResourceCollection
+class {{ class }} extends {{ extends }}
 {
-    public function __construct($resourceCollection)
-    {
-        parent::__construct($resourceCollection, true);
-    }
-
-    protected function getArray($resource)
-    {
-        return [
-            //
-        ];
-    }
+   {{ useTrait }}
 }

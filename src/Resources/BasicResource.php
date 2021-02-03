@@ -3,11 +3,12 @@
 namespace Behamin\BResources\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 use stdClass;
 
 class BasicResource extends JsonResource
 {
-    protected $data, $message, $error_message, $errors, $count, $sum;
+    protected $data, $message, $error_message, $errors, $count, $sum, $transform;
 
     public function __construct($resource, $transform = false)
     {
@@ -18,12 +19,27 @@ class BasicResource extends JsonResource
         $this->message = $this['message'] ?? null;
         $this->error_message = $this['error_message'] ?? null;
         $this->errors = $this['errors'] ?? null;
-        if ($transform and count(get_object_vars($this->data)) > 0) {
+
+        if ($transform and $this->isObjectVars()) {
+            $this->transform = $transform;
             $this->data = $this->getArray($this->data);
         }
     }
 
-    public function toArray($resource)
+    public function isObjectVars()
+    {
+        if (is_object($this->data) && count(get_object_vars($this->data)) > 0){
+            return true;
+        }
+
+        if (is_array($this->data) && count($this['data']) > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function toArray($request)
     {
         return [
             "data" => $this->data,
@@ -33,14 +49,31 @@ class BasicResource extends JsonResource
                 "errors" => $this->errors
             ]
         ];
-    }   
+    }
 
     protected function getArray($resource)
     {
-        if (method_exists($resource, 'toArray')) {
-            return $resource->toArray();
-        } else {
-            return get_object_vars($resource);
+        if (is_bool($this->transform)) {
+            if (method_exists($resource, 'toArray')) {
+                return $resource->toArray();
+            } else {
+                return get_object_vars($resource);
+            }
         }
+
+        $transform = is_string($this->transform) ? [$this->transform] : $this->transform;
+        if (! is_array($transform)){
+            return $resource;
+        }
+
+        $data = [];
+        foreach ($transform as $key) {
+            if (is_array($resource)) {
+                $data[$key] = $resource[$key];
+            } else {
+                $data[$key] = data_get($resource, $key);
+            }
+        }
+        return $data;
     }
 }
