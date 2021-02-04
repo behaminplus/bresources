@@ -1,4 +1,5 @@
 <?php
+
 namespace Behamin\BResources\Traits;
 
 use Illuminate\Support\Collection;
@@ -20,12 +21,12 @@ trait CollectionResource
 
     protected function transformData()
     {
-        if ($this['data'] instanceof Collection) {
-            $items = $this['data']->transform(function ($item) {
+        if ($this->data instanceof Collection) {
+            $items = $this->data->transform(function ($item) {
                 return $this->getArray($item);
             });
         } else {
-            $items = $this->getArray($this['data']);
+            $items = $this->getArray($this->data);
         }
 
         $this->data = [
@@ -38,7 +39,7 @@ trait CollectionResource
     protected function getData()
     {
         $this->data = [
-            'items' => $this['data'],
+            'items' => $this->data,
             'count' => $this->count ?? count($this->data),
             'sum' => $this->sum
         ];

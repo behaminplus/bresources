@@ -3,7 +3,6 @@
 namespace Behamin\BResources\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Arr;
 use stdClass;
 
 class BasicResource extends JsonResource
@@ -28,11 +27,11 @@ class BasicResource extends JsonResource
 
     public function isObjectVars()
     {
-        if (is_object($this->data) && count(get_object_vars($this->data)) > 0){
+        if (is_object($this->data) && count(get_object_vars($this->data)) > 0) {
             return true;
         }
 
-        if (is_array($this->data) && count($this['data']) > 0) {
+        if (is_array($this->data) && count($this->data) > 0) {
             return true;
         }
 
@@ -60,12 +59,10 @@ class BasicResource extends JsonResource
                 return get_object_vars($resource);
             }
         }
-
         $transform = is_string($this->transform) ? [$this->transform] : $this->transform;
-        if (! is_array($transform)){
+        if (!is_array($transform)) {
             return $resource;
         }
-
         $data = [];
         foreach ($transform as $key) {
             if (is_array($resource)) {
@@ -74,6 +71,7 @@ class BasicResource extends JsonResource
                 $data[$key] = data_get($resource, $key);
             }
         }
+
         return $data;
     }
 }
