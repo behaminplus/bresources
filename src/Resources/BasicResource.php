@@ -3,7 +3,7 @@
 namespace Behamin\BResources\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use stdClass;
+use Illuminate\Support\Collection;
 
 class BasicResource extends JsonResource
 {
@@ -12,26 +12,28 @@ class BasicResource extends JsonResource
     public function __construct($resource, $transform = false)
     {
         parent::__construct($resource);
-        $this->data = $this['data'] ?? new stdClass();
+        $this->data = $this['data'] ?? null;
         $this->count = $this['count'] ?? null;
         $this->sum = $this['sum'] ?? null;
         $this->message = $this['message'] ?? null;
         $this->error_message = $this['error_message'] ?? null;
         $this->errors = $this['errors'] ?? null;
-
-        if ($transform and $this->isObjectVars()) {
-            $this->transform = $transform;
-            $this->data = $this->getArray($this->data);
+        if ($this->hasDataVariables()) {
+            if ($transform) {
+                $this->transform = $transform;
+                $this->data = $this->getArray($this->data);
+            }
+        } else {
+            $this->setEmptyData();
         }
     }
 
-    public function isObjectVars()
+    public function hasDataVariables()
     {
-        if (is_object($this->data) && count(get_object_vars($this->data)) > 0) {
+        if (is_object($this->data) and count(get_object_vars($this->data)) > 0) {
             return true;
         }
-
-        if (is_array($this->data) && count($this->data) > 0) {
+        if ((is_array($this->data) or $this->data instanceof Collection) and count($this->data) > 0) {
             return true;
         }
 
@@ -73,5 +75,14 @@ class BasicResource extends JsonResource
         }
 
         return $data;
+    }
+
+    protected function setEmptyData()
+    {
+        if (is_array($this['data']) or $this['data'] instanceof Collection) {
+            $this->data = [];
+        } else {
+            $this->data = null;
+        }
     }
 }
