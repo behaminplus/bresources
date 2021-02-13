@@ -25,7 +25,9 @@ trait CollectionResource
                 return $this->getArray($item);
             });
         } else {
-            $items = $this->getArray($this->data);
+            $items = array_map(function ($item) {
+                return $this->getArray($item);
+            }, $this->data);
         }
 
         $this->data = [
