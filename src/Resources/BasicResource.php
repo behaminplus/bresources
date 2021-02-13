@@ -18,26 +18,7 @@ class BasicResource extends JsonResource
         $this->message = $this['message'] ?? null;
         $this->error_message = $this['error_message'] ?? null;
         $this->errors = $this['errors'] ?? null;
-        if ($this->hasDataVariables()) {
-            if ($transform) {
-                $this->transform = $transform;
-                $this->data = $this->getArray($this->data);
-            }
-        } else {
-            $this->setEmptyData();
-        }
-    }
-
-    public function hasDataVariables()
-    {
-        if (is_object($this->data) and count(get_object_vars($this->data)) > 0) {
-            return true;
-        }
-        if ((is_array($this->data) or $this->data instanceof Collection) and count($this->data) > 0) {
-            return true;
-        }
-
-        return false;
+        $this->finalizeData($transform);
     }
 
     public function toArray($request)
@@ -77,12 +58,24 @@ class BasicResource extends JsonResource
         return $data;
     }
 
-    protected function setEmptyData()
+    protected function finalizeData($transform)
     {
-        if (is_array($this['data']) or $this['data'] instanceof Collection) {
-            $this->data = [];
-        } else {
-            $this->data = null;
+        if (is_object($this->data)) {
+            $objectVarsCount = count(get_object_vars($this->data));
+            if ($objectVarsCount > 0 and $transform) {
+                $this->transform = $transform;
+                $this->data = $this->getArray($this->data);
+            } elseif ($objectVarsCount == 0) {
+                $this->data = null;
+            }
+        } elseif (is_array($this->data) or $this->data instanceof Collection) {
+            $itemsCount = count($this->data);
+            if ($itemsCount > 0 and $transform) {
+                $this->transform = $transform;
+                $this->data = $this->getArray($this->data);
+            } elseif ($itemsCount == 0) {
+                $this->data = [];
+            }
         }
     }
 }
