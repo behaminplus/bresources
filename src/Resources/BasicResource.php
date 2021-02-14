@@ -3,7 +3,7 @@
 namespace Behamin\BResources\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use stdClass;
+use Illuminate\Support\Collection;
 
 class BasicResource extends JsonResource
 {
@@ -12,30 +12,13 @@ class BasicResource extends JsonResource
     public function __construct($resource, $transform = false)
     {
         parent::__construct($resource);
-        $this->data = $this['data'] ?? new stdClass();
+        $this->data = $this['data'] ?? null;
         $this->count = $this['count'] ?? null;
         $this->sum = $this['sum'] ?? null;
         $this->message = $this['message'] ?? null;
         $this->error_message = $this['error_message'] ?? null;
         $this->errors = $this['errors'] ?? null;
-
-        if ($transform and $this->isObjectVars()) {
-            $this->transform = $transform;
-            $this->data = $this->getArray($this->data);
-        }
-    }
-
-    public function isObjectVars()
-    {
-        if (is_object($this->data) && count(get_object_vars($this->data)) > 0) {
-            return true;
-        }
-
-        if (is_array($this->data) && count($this->data) > 0) {
-            return true;
-        }
-
-        return false;
+        $this->finalizeData($transform);
     }
 
     public function toArray($request)
@@ -73,5 +56,26 @@ class BasicResource extends JsonResource
         }
 
         return $data;
+    }
+
+    protected function finalizeData($transform)
+    {
+        if (is_object($this->data)) {
+            $objectVarsCount = count(get_object_vars($this->data));
+            if ($objectVarsCount > 0 and $transform) {
+                $this->transform = $transform;
+                $this->data = $this->getArray($this->data);
+            } elseif ($objectVarsCount == 0) {
+                $this->data = null;
+            }
+        } elseif (is_array($this->data) or $this->data instanceof Collection) {
+            $itemsCount = count($this->data);
+            if ($itemsCount > 0 and $transform) {
+                $this->transform = $transform;
+                $this->data = $this->getArray($this->data);
+            } elseif ($itemsCount == 0) {
+                $this->data = [];
+            }
+        }
     }
 }

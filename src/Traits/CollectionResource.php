@@ -8,7 +8,6 @@ trait CollectionResource
 {
     public function __construct($collectionResource, $transform = false)
     {
-        //send $transform to false because not set to root data with basic request
         parent::__construct($collectionResource, false);
 
         if ($transform) {
@@ -26,7 +25,9 @@ trait CollectionResource
                 return $this->getArray($item);
             });
         } else {
-            $items = $this->getArray($this->data);
+            $items = array_map(function ($item) {
+                return $this->getArray($item);
+            }, $this->data);
         }
 
         $this->data = [
