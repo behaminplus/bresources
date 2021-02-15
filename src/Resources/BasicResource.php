@@ -60,21 +60,21 @@ class BasicResource extends JsonResource
 
     protected function finalizeData($transform)
     {
-        if (is_object($this->data)) {
-            $objectVarsCount = count(get_object_vars($this->data));
-            if ($objectVarsCount > 0 and $transform) {
-                $this->transform = $transform;
-                $this->data = $this->getArray($this->data);
-            } elseif ($objectVarsCount == 0) {
-                $this->data = null;
-            }
-        } elseif (is_array($this->data) or $this->data instanceof Collection) {
+        if (is_array($this->data) or $this->data instanceof Collection) {
             $itemsCount = count($this->data);
             if ($itemsCount > 0 and $transform) {
                 $this->transform = $transform;
                 $this->data = $this->getArray($this->data);
             } elseif ($itemsCount == 0) {
                 $this->data = [];
+            }
+        } elseif (is_object($this->data)) {
+            $objectVarsCount = count(get_object_vars($this->data));
+            if ($objectVarsCount > 0 and $transform) {
+                $this->transform = $transform;
+                $this->data = $this->getArray($this->data);
+            } elseif ($objectVarsCount == 0) {
+                $this->data = null;
             }
         }
     }
