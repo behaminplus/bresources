@@ -7,7 +7,8 @@ use Illuminate\Support\Collection;
 
 class BasicResource extends JsonResource
 {
-    protected $data, $message, $error_message, $errors, $count, $sum, $transform;
+    protected $data, $message, $errorMessage, $errors, $count, $sum, $transform;
+    protected $next, $back;
 
     public function __construct($resource, $transform = false)
     {
@@ -16,21 +17,34 @@ class BasicResource extends JsonResource
         $this->count = $this['count'] ?? null;
         $this->sum = $this['sum'] ?? null;
         $this->message = $this['message'] ?? null;
-        $this->error_message = $this['error_message'] ?? null;
+        $this->errorMessage = $this['error_message'] ?? null;
         $this->errors = $this['errors'] ?? null;
+        $this->next = $this['next'] ?? null;
+        $this->back = $this['back'] ?? null;
         $this->finalizeData($transform);
     }
 
     public function toArray($request)
     {
-        return [
-            "data" => $this->data,
-            "message" => $this->message,
-            "error" => [
-                "message" => $this->error_message,
-                "errors" => $this->errors
+        $data = [
+            'data' => $this->data,
+            'message' => $this->message,
+            'error' => [
+                'message' => $this->errorMessage,
+                'errors' => $this->errors
             ]
         ];
+        if (!empty($this->next)) {
+            $data = array_merge($data, [
+                'next' => $this->next
+            ]);
+        }
+        if (!empty($this->back)) {
+            $data = array_merge($data, [
+                'back' => $this->back
+            ]);
+        }
+        return $data;
     }
 
     protected function getArray($resource)
