@@ -7,8 +7,9 @@ use Illuminate\Support\Collection;
 
 class BasicResource extends JsonResource
 {
-    protected $data, $message, $errorMessage, $errors, $count, $sum, $transform;
-    protected $next, $back;
+    protected $transform;
+    protected $next, $back, $checkpoint;
+    protected $data, $message, $errorMessage, $errors, $count, $sum;
 
     public function __construct($resource, $transform = false)
     {
@@ -21,6 +22,7 @@ class BasicResource extends JsonResource
         $this->errors = $this['errors'] ?? null;
         $this->next = $this['next'] ?? null;
         $this->back = $this['back'] ?? null;
+        $this->checkpoint = $this['checkpoint'] ?? null;
         $this->finalizeData($transform);
     }
 
@@ -34,14 +36,19 @@ class BasicResource extends JsonResource
                 'errors' => $this->errors
             ]
         ];
-        if (!empty($this->next)) {
+        if (!is_null($this->next)) {
             $data = array_merge($data, [
                 'next' => $this->next
             ]);
         }
-        if (!empty($this->back)) {
+        if (!is_null($this->back)) {
             $data = array_merge($data, [
                 'back' => $this->back
+            ]);
+        }
+        if (!is_null($this->checkpoint)) {
+            $data = array_merge($data, [
+                'checkpoint' => $this->checkpoint
             ]);
         }
         return $data;

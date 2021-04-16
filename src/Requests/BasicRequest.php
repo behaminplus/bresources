@@ -5,7 +5,7 @@ namespace Behamin\BResources\Requests;
 use Behamin\BResources\Resources\BasicResource;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\ValidationException;
 
 class BasicRequest extends FormRequest
 {
@@ -33,9 +33,9 @@ class BasicRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response(new BasicResource([
-            'error_message' => 'خطا در اطلاعات ورودی',
+        throw new ValidationException($validator, response(new BasicResource([
+            'error_message' => $validator->errors()->first(),
             'errors' => $validator->errors()
-        ]), 422));
+        ]), 422), $this->errorBag);
     }
 }
