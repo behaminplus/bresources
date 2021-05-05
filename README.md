@@ -1,5 +1,8 @@
-# Behamin Resources
+[![License](https://poser.pugx.org/behamin/bresources/license)](//packagist.org/packages/behamin/bresources)
+[![Latest Stable Version](https://poser.pugx.org/behamin/bresources/v)](//packagist.org/packages/behamin/bresources)
+[![Total Downloads](https://poser.pugx.org/behamin/bresources/downloads)](//packagist.org/packages/behamin/bresources)
 
+# Behamin Resources
 Behamin standard formats for api responses.
 
 ## Installation
@@ -50,7 +53,7 @@ On validation error for requests (with 422 status code):
 ```
 
 ## Usage
-Create resources and requests with following artisan commands and pass data, message, error_message or count like following example:
+Create resources and requests with artisan commands and pass data, message, error_message or count to resources like following examples:
 
 ```php
     list($emails, $count) = Email::filter($filters);
@@ -63,6 +66,32 @@ Create resources and requests with following artisan commands and pass data, mes
     {
         return response(new PhoneResource(['data' => $phone, 'message'=> 'phone info.']));
     }
+```
+You can specify output fields from getArray() method of resource classes. Set transform variable as true so that resource class converts data using specified fields.
+```php
+<?php
+
+namespace App\Http\Resources;
+
+use Behamin\BResources\Resources\BasicResource;
+
+class PhoneResource extends BasicResource
+{
+    public function __construct($resource)
+    {
+        parent::__construct($resource, true);
+    }
+
+    protected function getArray($resource)
+    {
+        return [
+            'id' => $resource->id,
+            'phone' => $resource->phone,
+            'status' => $resource->status
+        ];
+    }
+}
+
 ```
  
 #### Resource
