@@ -32,7 +32,7 @@ trait CollectionResource
 
         $this->data = [
             'items' => $items,
-            'count' => $this->count ?? count($this->data),
+            'count' => $this->count ?? (is_countable($this->data) ? count($this->data) : 0),
             'sum' => $this->sum
         ];
     }
@@ -41,7 +41,7 @@ trait CollectionResource
     {
         $this->data = [
             'items' => $this->data,
-            'count' => $this->count ?? count($this->data),
+            'count' => $this->count ?? (is_countable($this->data) ? count($this->data) : 0),
             'sum' => $this->sum
         ];
     }

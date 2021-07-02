@@ -47,7 +47,11 @@ On validation error for requests (with 422 status code):
     "message": null,
     "error": {
         "message": "first error message in message bag",
-        "errors": []
+        "errors": {
+            "password": [
+                "password field is required."
+            ]
+        }
     }
 }
 ```
@@ -56,9 +60,12 @@ On validation error for requests (with 422 status code):
 Create resources and requests with artisan commands and pass data, message, error_message or count to resources like following examples:
 
 ```php
-    list($emails, $count) = Email::filter($filters);
-    $emails = $emails->get();
-    return response(new EmailResourceCollection(['data' => $emails, 'count' => $count]));
+    public function index(EmailFilter $filters)
+    {
+        list($emails, $count) = Email::filter($filters);
+        $emails = $emails->get();
+        return response(new EmailResourceCollection(['data' => $emails, 'count' => $count]));
+    }
 ```
 
 ```php
