@@ -3,20 +3,23 @@
 namespace Behamin\BResources;
 
 use Illuminate\Support\ServiceProvider;
-use \Behamin\BResources\Console\MakeBResourceCommand;
-use \Behamin\BResources\Console\MakeBResourceCollectionCommand;
-use \Behamin\BResources\Console\MakeBRequestCommand;
+use Behamin\BResources\Console\MakeBResourceCommand;
+use Behamin\BResources\Console\MakeBResourceCollectionCommand;
+use Behamin\BResources\Console\MakeBRequestCommand;
 
 class BResourceServiceProvider extends ServiceProvider
 {
-    public function boot(): void
+    public function register()
     {
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                MakeBResourceCommand::class,
-                MakeBResourceCollectionCommand::class,
-                MakeBRequestCommand::class
-            ]);
-        }
+        $this->commands([
+            MakeBResourceCommand::class,
+            MakeBResourceCollectionCommand::class,
+            MakeBRequestCommand::class
+        ]);
+    }
+
+    public function boot()
+    {
+        //
     }
 }
