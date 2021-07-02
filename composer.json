@@ -1,6 +1,9 @@
 {
     "name": "behamin/bresources",
     "description": "Behamin basic and standard api response format for laravel",
+    "homepage": "https://github.com/omalizadeh/bresources",
+    "type": "library",
+    "license": "MIT",
     "keywords": [
         "behamin",
         "request",
@@ -11,8 +14,6 @@
         "json",
         "collection"
     ],
-    "type": "library",
-    "license": "MIT",
     "authors": [
         {
             "name": "Omid Alizadeh",
@@ -23,10 +24,18 @@
             "email": "abi.hossein@gmail.com"
         }
     ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "ext-json": "*",
+        "laravel/framework": "~6.0|~7.0|~8.0"
+    },
     "autoload": {
         "psr-4": {
             "Behamin\\BResources\\": "src/"
         }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.19"
     },
     "autoload-dev": {
         "psr-4": {
@@ -39,11 +48,6 @@
                 "Behamin\\BResources\\BResourceServiceProvider"
             ]
         }
-    },
-    "require": {
-      "php": "^7.3|^8.0",
-      "laravel/framework": "~6.0|~7.0|~8.0",
-      "ext-json": "*"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
