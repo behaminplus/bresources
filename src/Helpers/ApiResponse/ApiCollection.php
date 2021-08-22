@@ -3,24 +3,34 @@
 namespace Behamin\BResources\Helpers\ApiResponse;
 
 use Behamin\BResources\Resources\BasicResourceCollection;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class ApiCollection
+class ApiCollection extends Response
 {
-    private ?string $message;
-    private int $status;
 
-    public function __construct(?string $message, int $status)
+    /**
+     * @var mixed
+     */
+    private $items;
+    private ?int $count;
+
+    /**
+     * @param  mixed  $items
+     * @param  null|int  $count
+     * @return $this
+     */
+    public function collection($items, ?int $count): self
     {
-        $this->message = $message;
-        $this->status = $status;
+        $this->items = $items;
+        $this->count = $count;
+        return $this;
     }
 
-    public function collection($items, int $count): JsonResponse
+    protected function respond(): JsonResource
     {
-        return response()->json(new BasicResourceCollection(
-            ['data' => $items, 'count' => $count, 'message' => $this->message]),
-            $this->status
-        );
+        return new BasicResourceCollection([
+            'data' => $this->items, 'count' => $this->count,
+            'message' => $this->message
+        ]);
     }
 }

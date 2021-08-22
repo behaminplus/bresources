@@ -3,21 +3,28 @@
 namespace Behamin\BResources\Helpers\ApiResponse;
 
 use Behamin\BResources\Resources\BasicResource;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class ApiData
+class ApiData extends Response
 {
-    private ?string $message;
-    private int $status;
 
-    public function __construct(?string $message, int $status)
+    /**
+     * @var mixed
+     */
+    private $data;
+
+    /**
+     * @param  mixed  $data
+     * @return $this
+     */
+    public function data($data): self
     {
-        $this->message = $message;
-        $this->status = $status;
+        $this->data = $data;
+        return $this;
     }
 
-    public function data($data): JsonResponse
+    public function respond(): JsonResource
     {
-        return response()->json(new BasicResource(['data' => $data, 'message' => $this->message]), $this->status);
+        return new BasicResource(['data' => $this->data, 'message' => $this->message]);
     }
 }

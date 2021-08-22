@@ -4,13 +4,18 @@ namespace Behamin\BResources\Helpers\ApiResponse;
 
 use Behamin\BResources\Helpers\Exceptions\NotImplementedException;
 use Behamin\BResources\Resources\BasicResource;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response as HttpResponse;
 
-class Api
+class Api extends Response
 {
-    private ?string $message = null;
-    private int $status = Response::HTTP_OK;
+    protected ?string $message = null;
+    private int $status = HttpResponse::HTTP_OK;
+
+    public function __construct()
+    {
+        parent::__construct($this->message, $this->status);
+    }
 
     public function message(?string $message): self
     {
@@ -24,17 +29,12 @@ class Api
         return $this;
     }
 
-    public function data($data = null): JsonResponse
+    public function data($data = null): ApiData
     {
         return (new ApiData($this->message, $this->status))->data($data);
     }
 
-    public function respond(): JsonResponse
-    {
-        return response()->json(new BasicResource(['message' => $this->message]), $this->status);
-    }
-
-    public function collection($items, $count): JsonResponse
+    public function collection($items, $count = null): ApiCollection
     {
         return (new ApiCollection($this->message, $this->status))->collection($items, $count);
     }
@@ -42,5 +42,10 @@ class Api
     public function errors()
     {
         throw new NotImplementedException();
+    }
+
+    protected function respond(): JsonResource
+    {
+        return new BasicResource(['message' => $this->message]);
     }
 }
