@@ -32,7 +32,10 @@
     "autoload": {
         "psr-4": {
             "Behamin\\BResources\\": "src/"
-        }
+        },
+        "files": [
+            "src/Helpers/functions.php"
+        ]
     },
     "require-dev": {
         "orchestra/testbench": "^6.19"
