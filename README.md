@@ -100,7 +100,31 @@ class PhoneResource extends BasicResource
 }
 
 ```
- 
+
+Also, you can use apiResponse() helper function to directly send response
+
+```php
+class PhoneController {
+
+    public function show(Phone $phone)
+    {
+        return apiResponse()->message('phone info.')->status(200)->data($phone);
+    }
+    
+    public function delete(Phone $phone)
+    {
+        $phone->delete();
+        return apiResponse()->message('phone info.')->status(200)->respond();
+    }
+    
+    public function index() {
+        $phones = Phone::all();
+        return apiResponse()->message('phone info.')->status(200)->collection($phones, $phones->count());
+    }
+}
+```
+In above example **message** and **status** are optional, and their default value respectively are `null` and `200`.
+
 #### Resource
 ```bash
 php artisan make:bresource ResourceName
