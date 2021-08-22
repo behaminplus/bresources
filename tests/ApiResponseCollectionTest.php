@@ -77,4 +77,12 @@ class ApiResponseCollectionTest extends TestCase
         $this->assertEquals('profile updated.', $resource['message']);
     }
 
+    /** @test */
+    public function errorMessageTest()
+    {
+        $resource = apiResponse()->errors('invalid data.')->get()->getData(true);
+        $this->assertIsString($resource['error']['message']);
+        $this->assertEquals('invalid data.', $resource['error']['message']);
+    }
+
 }

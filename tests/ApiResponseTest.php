@@ -74,4 +74,12 @@ class ApiResponseTest extends TestCase
         $this->assertIsString($resource['message']);
         $this->assertEquals('form submitted.', $resource['message']);
     }
+
+    /** @test */
+    public function errorMessageTest()
+    {
+        $resource = apiResponse()->errors('invalid data.')->get()->getData(true);
+        $this->assertIsString($resource['error']['message']);
+        $this->assertEquals('invalid data.', $resource['error']['message']);
+    }
 }

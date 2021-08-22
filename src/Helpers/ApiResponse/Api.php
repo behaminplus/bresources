@@ -2,7 +2,6 @@
 
 namespace Behamin\BResources\Helpers\ApiResponse;
 
-use Behamin\BResources\Helpers\Exceptions\NotImplementedException;
 use Behamin\BResources\Resources\BasicResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response as HttpResponse;
@@ -39,9 +38,9 @@ class Api extends Response
         return (new ApiCollection($this->message, $this->status))->collection($items, $count);
     }
 
-    public function errors()
+    public function errors(string $errorMessage, array $errors = []): ApiError
     {
-        throw new NotImplementedException();
+        return (new ApiError($this->message, $this->status))->errors($errorMessage, $errors);
     }
 
     protected function respond(): JsonResource
