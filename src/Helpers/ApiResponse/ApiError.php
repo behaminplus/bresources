@@ -9,7 +9,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApiError extends Response
 {
-
     private string $errorMessage;
     private array $errors;
 
@@ -24,7 +23,8 @@ class ApiError extends Response
     {
         return new BasicResource([
             'error_message' => $this->errorMessage,
-            'errors' => $this->errors
+            'errors' => $this->errors,
+            'message' => $this->message
         ]);
     }
 }

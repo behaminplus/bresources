@@ -7,7 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApiData extends Response
 {
-
     /**
      * @var mixed
      */

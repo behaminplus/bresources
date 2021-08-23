@@ -4,18 +4,9 @@ namespace Behamin\BResources\Helpers\ApiResponse;
 
 use Behamin\BResources\Resources\BasicResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Response as HttpResponse;
 
 class Api extends Response
 {
-    protected ?string $message = null;
-    private int $status = HttpResponse::HTTP_OK;
-
-    public function __construct()
-    {
-        parent::__construct($this->message, $this->status);
-    }
-
     public function message(?string $message): self
     {
         $this->message = $message;

@@ -7,7 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApiCollection extends Response
 {
-
     /**
      * @var mixed
      */
@@ -29,7 +28,8 @@ class ApiCollection extends Response
     protected function respond(): JsonResource
     {
         return new BasicResourceCollection([
-            'data' => $this->items, 'count' => $this->count,
+            'data' => $this->items,
+            'count' => $this->count,
             'message' => $this->message
         ]);
     }

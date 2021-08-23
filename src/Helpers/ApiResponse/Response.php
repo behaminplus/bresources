@@ -6,13 +6,14 @@ namespace Behamin\BResources\Helpers\ApiResponse;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response as HttpResponse;
 
 abstract class Response
 {
     protected ?string $message;
-    private int $status;
+    protected int $status;
 
-    public function __construct(?string $message, int $status)
+    public function __construct(?string $message = null, int $status = HttpResponse::HTTP_OK)
     {
         $this->message = $message;
         $this->status = $status;
