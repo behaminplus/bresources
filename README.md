@@ -108,18 +108,26 @@ class PhoneController {
 
     public function show(Phone $phone)
     {
-        return apiResponse()->message('phone info.')->status(200)->data($phone);
+        return apiResponse()->message('phone info.')->status(200)->data($phone)->get();
+    }
+    
+    public function index() {
+        $phones = Phone::all();
+        return apiResponse()->message('phone info.')->status(200)->collection($phones, $phones->count())->get();
+    }
+    
+    public function update(Request $request, Phone $phone) {
+        $isUpdated = $phone->update($request->all());
+        if (!$isUpdated) {
+            return apiResponse()->errors('phone is not updated');
+        }
+        return apiResponse()->message('phone is updated')->data($phone)->get();
     }
     
     public function delete(Phone $phone)
     {
         $phone->delete();
-        return apiResponse()->message('phone info.')->status(200)->respond();
-    }
-    
-    public function index() {
-        $phones = Phone::all();
-        return apiResponse()->message('phone info.')->status(200)->collection($phones, $phones->count());
+        return apiResponse()->message('phone info.')->status(200)->get();
     }
 }
 ```
