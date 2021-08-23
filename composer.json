@@ -25,14 +25,17 @@
         }
     ],
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^7.4|^8.0",
         "ext-json": "*",
         "laravel/framework": "~6.0|~7.0|~8.0"
     },
     "autoload": {
         "psr-4": {
             "Behamin\\BResources\\": "src/"
-        }
+        },
+        "files": [
+            "src/Helpers/functions.php"
+        ]
     },
     "require-dev": {
         "orchestra/testbench": "^6.19"
