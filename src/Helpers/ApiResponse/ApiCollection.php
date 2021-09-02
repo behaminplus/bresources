@@ -30,7 +30,7 @@ class ApiCollection extends Response
         return new BasicResourceCollection([
             'data' => $this->items,
             'count' => $this->count,
-            'message' => $this->message
+            'message' => $this->getMessage()
         ]);
     }
 }

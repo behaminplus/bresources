@@ -24,7 +24,7 @@ class ApiError extends Response
         return new BasicResource([
             'error_message' => $this->errorMessage,
             'errors' => $this->errors,
-            'message' => $this->message
+            'message' => $this->getMessage()
         ]);
     }
 }

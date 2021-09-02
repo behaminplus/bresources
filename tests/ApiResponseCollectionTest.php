@@ -72,7 +72,7 @@ class ApiResponseCollectionTest extends TestCase
     /** @test */
     public function messageTest()
     {
-        $resource = apiResponse()->message('profile updated.')->collection([])->get()->getData(true);
+        $resource = apiResponse()->collection([])->message('profile updated.')->get()->getData(true);
         $this->assertIsString($resource['message']);
         $this->assertEquals('profile updated.', $resource['message']);
     }
