@@ -21,7 +21,7 @@ class ApiResponseTest extends TestCase
     /** @test */
     public function errorKeysExistTest()
     {
-        $resource = apiResponse()->get()->getData(true);
+        $resource = apiResponse()->data(array())->get()->getData(true);
         $errors = $resource['error'];
 
         $this->assertArrayHasKey('errors', $errors);
@@ -31,7 +31,7 @@ class ApiResponseTest extends TestCase
     /** @test */
     public function dataTest()
     {
-        $resource =apiResponse()->get()->getData(true);
+        $resource =apiResponse()->data(null)->get()->getData(true);
         $this->assertNull($resource['data']);
 
         $data = [

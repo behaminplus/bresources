@@ -22,8 +22,8 @@ class ApiData extends Response
         return $this;
     }
 
-    public function respond(): JsonResource
+    protected function respond(): JsonResource
     {
-        return new BasicResource(['data' => $this->data, 'message' => $this->message]);
+        return new BasicResource(['data' => $this->data, 'message' => $this->getMessage()]);
     }
 }
