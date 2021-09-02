@@ -2,40 +2,25 @@
 
 namespace Behamin\BResources\Helpers\ApiResponse;
 
-use Behamin\BResources\Resources\BasicResource;
-use Illuminate\Http\Resources\Json\JsonResource;
-
-class Api extends Response
+class Api
 {
-    public function message(?string $message): self
+    public function data($data): ApiData
     {
-        $this->message = $message;
-        return $this;
+        return (new ApiData())->data($data);
     }
 
-    public function status(int $code): self
+    public function collection($items, ?int $count = null): ApiCollection
     {
-        $this->status = $code;
-        return $this;
-    }
-
-    public function data($data = null): ApiData
-    {
-        return (new ApiData($this->message, $this->status))->data($data);
-    }
-
-    public function collection($items, $count = null): ApiCollection
-    {
-        return (new ApiCollection($this->message, $this->status))->collection($items, $count);
+        return (new ApiCollection())->collection($items, $count);
     }
 
     public function errors(string $errorMessage, array $errors = []): ApiError
     {
-        return (new ApiError($this->message, $this->status))->errors($errorMessage, $errors);
+        return (new ApiError())->errors($errorMessage, $errors);
     }
 
-    protected function respond(): JsonResource
+    public function message(string $message): ApiMessage
     {
-        return new BasicResource(['message' => $this->message]);
+        return (new ApiMessage())->message($message);
     }
 }
