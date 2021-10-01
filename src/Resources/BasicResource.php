@@ -3,30 +3,29 @@
 namespace Behamin\BResources\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 class BasicResource extends JsonResource
 {
     protected $transform;
-    protected $next, $back, $checkpoint;
     protected $data, $message, $errorMessage, $errors, $count, $sum;
 
     public function __construct($resource, $transform = false)
     {
         parent::__construct($resource);
-        $this->data = $this['data'] ?? null;
-        $this->count = $this['count'] ?? null;
-        $this->sum = $this['sum'] ?? null;
-        $this->message = $this['message'] ?? null;
-        $this->errorMessage = $this['error_message'] ?? null;
-        $this->errors = $this['errors'] ?? null;
-        $this->next = $this['next'] ?? null;
-        $this->back = $this['back'] ?? null;
-        $this->checkpoint = $this['checkpoint'] ?? null;
+
+        $this->data = $this->resource['data'] ?? null;
+        $this->count = $this->resource['count'] ?? null;
+        $this->sum = $this->resource['sum'] ?? null;
+        $this->message = $this->resource['message'] ?? null;
+        $this->errorMessage = $this->resource['error_message'] ?? null;
+        $this->errors = $this->resource['errors'] ?? null;
+
         $this->finalizeData($transform);
     }
 
-    public function toArray($request)
+    public function toArray($request = null)
     {
         $data = [
             'data' => $this->data,
@@ -36,22 +35,8 @@ class BasicResource extends JsonResource
                 'errors' => $this->errors
             ]
         ];
-        if (!is_null($this->next)) {
-            $data = array_merge($data, [
-                'next' => $this->next
-            ]);
-        }
-        if (!is_null($this->back)) {
-            $data = array_merge($data, [
-                'back' => $this->back
-            ]);
-        }
-        if (!is_null($this->checkpoint)) {
-            $data = array_merge($data, [
-                'checkpoint' => $this->checkpoint
-            ]);
-        }
-        return $data;
+
+        return array_merge($data, Arr::except($this->resource, $this->getMainKeys()));
     }
 
     protected function getArray($resource)
@@ -59,14 +44,17 @@ class BasicResource extends JsonResource
         if (is_bool($this->transform)) {
             if (method_exists($resource, 'toArray')) {
                 return $resource->toArray();
-            } else {
-                return get_object_vars($resource);
             }
+
+            return get_object_vars($resource);
         }
+
         $transform = is_string($this->transform) ? [$this->transform] : $this->transform;
+
         if (!is_array($transform)) {
             return $resource;
         }
+
         $data = [];
         foreach ($transform as $key) {
             if (is_array($resource)) {
@@ -79,24 +67,35 @@ class BasicResource extends JsonResource
         return $data;
     }
 
-    protected function finalizeData($transform)
+    protected function finalizeData($transform): void
     {
-        if (is_array($this->data) or $this->data instanceof Collection) {
+        if (is_array($this->data) || $this->data instanceof Collection) {
             $itemsCount = count($this->data);
-            if ($itemsCount > 0 and $transform) {
+            if ($itemsCount > 0 && $transform) {
                 $this->transform = $transform;
                 $this->data = $this->getArray($this->data);
-            } elseif ($itemsCount == 0) {
+            } elseif ($itemsCount === 0) {
                 $this->data = [];
             }
         } elseif (is_object($this->data)) {
             $objectVarsCount = count(get_object_vars($this->data));
-            if ($objectVarsCount > 0 and $transform) {
+            if ($objectVarsCount > 0 && $transform) {
                 $this->transform = $transform;
                 $this->data = $this->getArray($this->data);
-            } elseif ($objectVarsCount == 0) {
+            } elseif ($objectVarsCount === 0) {
                 $this->data = null;
             }
         }
+    }
+
+    private function getMainKeys(): array
+    {
+        return [
+            'data',
+            'message',
+            'error',
+            'message',
+            'errors',
+        ];
     }
 }
