@@ -7,9 +7,9 @@ use Behamin\BResources\Resources\BasicResourceCollection;
 class BasicResourceCollectionTest extends TestCase
 {
     /** @test */
-    public function mainKeysExistTest()
+    public function mainKeysExistTest(): void
     {
-        $resource = (new BasicResourceCollection(['data' => []]))->toArray(null);
+        $resource = (new BasicResourceCollection(['data' => []]))->toArray();
 
         $this->assertArrayHasKey('data', $resource);
         $this->assertArrayHasKey('message', $resource);
@@ -17,9 +17,9 @@ class BasicResourceCollectionTest extends TestCase
     }
 
     /** @test */
-    public function errorKeysExistTest()
+    public function errorKeysExistTest(): void
     {
-        $resource = (new BasicResourceCollection(['data' => []]))->toArray(null);
+        $resource = (new BasicResourceCollection(['data' => []]))->toArray();
         $errors = $resource['error'];
 
         $this->assertArrayHasKey('errors', $errors);
@@ -27,17 +27,18 @@ class BasicResourceCollectionTest extends TestCase
     }
 
     /** @test */
-    public function collectionKeysExistTest()
+    public function collectionKeysExistTest(): void
     {
-        $resource = (new BasicResourceCollection(['data' => []]))->toArray(null);
+        $resource = (new BasicResourceCollection(['data' => []]))->toArray();
         $resourceData = $resource['data'];
+
         $this->assertArrayHasKey('items', $resourceData);
         $this->assertArrayHasKey('count', $resourceData);
         $this->assertArrayHasKey('sum', $resourceData);
     }
 
     /** @test */
-    public function itemsTest()
+    public function itemsTest(): void
     {
         $data = [
             [
@@ -48,8 +49,9 @@ class BasicResourceCollectionTest extends TestCase
             ]
 
         ];
-        $resource = (new BasicResourceCollection(['data' => $data]))->toArray(null);
+        $resource = (new BasicResourceCollection(['data' => $data]))->toArray();
         $resourceData = $resource['data'];
+
         $this->assertIsArray($resourceData['items']);
         $this->assertIsInt($resourceData['count']);
         $this->assertCount(2, $resourceData['items']);
@@ -57,30 +59,33 @@ class BasicResourceCollectionTest extends TestCase
     }
 
     /** @test */
-    public function itemsCountTest()
+    public function itemsCountTest(): void
     {
         $data = [
             [
                 'key' => 'value'
             ]
         ];
-        $resource = (new BasicResourceCollection(['data' => $data, 'count' => 150]))->toArray(null);
+        $resource = (new BasicResourceCollection(['data' => $data, 'count' => 150]))->toArray();
         $resourceData = $resource['data'];
+
         $this->assertEquals(150, $resourceData['count']);
     }
 
     /** @test */
-    public function messageTest()
+    public function messageTest(): void
     {
-        $resource = (new BasicResourceCollection(['message' => 'profile updated.']))->toArray(null);
+        $resource = (new BasicResourceCollection(['message' => 'profile updated.']))->toArray();
+
         $this->assertIsString($resource['message']);
         $this->assertEquals('profile updated.', $resource['message']);
     }
 
     /** @test */
-    public function errorMessageTest()
+    public function errorMessageTest(): void
     {
-        $resource = (new BasicResourceCollection(['error_message' => 'invalid data.']))->toArray(null);
+        $resource = (new BasicResourceCollection(['error_message' => 'invalid data.']))->toArray();
+
         $this->assertIsString($resource['error']['message']);
         $this->assertEquals('invalid data.', $resource['error']['message']);
     }

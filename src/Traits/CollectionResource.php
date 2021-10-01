@@ -18,7 +18,7 @@ trait CollectionResource
         }
     }
 
-    protected function transformData()
+    protected function transformData(): void
     {
         if ($this->data instanceof Collection) {
             $items = $this->data->transform(function ($item) {
@@ -37,7 +37,7 @@ trait CollectionResource
         ];
     }
 
-    protected function getData()
+    protected function getData(): void
     {
         $this->data = [
             'items' => $this->data,

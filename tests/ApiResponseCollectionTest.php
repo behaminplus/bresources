@@ -1,13 +1,11 @@
 <?php
 
-
 namespace Behamin\BResources\Tests;
-
 
 class ApiResponseCollectionTest extends TestCase
 {
     /** @test */
-    public function mainKeysExistTest()
+    public function mainKeysExistTest(): void
     {
         $resource = apiResponse()->collection([])->get()->getData(true);
 
@@ -17,7 +15,7 @@ class ApiResponseCollectionTest extends TestCase
     }
 
     /** @test */
-    public function errorKeysExistTest()
+    public function errorKeysExistTest(): void
     {
         $resource = apiResponse()->collection([])->get()->getData(true);
         $errors = $resource['error'];
@@ -27,17 +25,18 @@ class ApiResponseCollectionTest extends TestCase
     }
 
     /** @test */
-    public function collectionKeysExistTest()
+    public function collectionKeysExistTest(): void
     {
         $resource = apiResponse()->collection([])->get()->getData(true);
         $resourceData = $resource['data'];
+
         $this->assertArrayHasKey('items', $resourceData);
         $this->assertArrayHasKey('count', $resourceData);
         $this->assertArrayHasKey('sum', $resourceData);
     }
 
     /** @test */
-    public function itemsTest()
+    public function itemsTest(): void
     {
         $data = [
             [
@@ -50,6 +49,7 @@ class ApiResponseCollectionTest extends TestCase
         ];
         $resource = apiResponse()->collection($data)->get()->getData(true);
         $resourceData = $resource['data'];
+
         $this->assertIsArray($resourceData['items']);
         $this->assertIsInt($resourceData['count']);
         $this->assertCount(2, $resourceData['items']);
@@ -57,7 +57,7 @@ class ApiResponseCollectionTest extends TestCase
     }
 
     /** @test */
-    public function itemsCountTest()
+    public function itemsCountTest(): void
     {
         $data = [
             [
@@ -66,23 +66,25 @@ class ApiResponseCollectionTest extends TestCase
         ];
         $resource = apiResponse()->collection($data, 150)->get()->getData(true);
         $resourceData = $resource['data'];
+
         $this->assertEquals(150, $resourceData['count']);
     }
 
     /** @test */
-    public function messageTest()
+    public function messageTest(): void
     {
         $resource = apiResponse()->collection([])->message('profile updated.')->get()->getData(true);
+
         $this->assertIsString($resource['message']);
         $this->assertEquals('profile updated.', $resource['message']);
     }
 
     /** @test */
-    public function errorMessageTest()
+    public function errorMessageTest(): void
     {
         $resource = apiResponse()->errors('invalid data.')->get()->getData(true);
+
         $this->assertIsString($resource['error']['message']);
         $this->assertEquals('invalid data.', $resource['error']['message']);
     }
-
 }
