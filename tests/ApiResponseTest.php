@@ -1,15 +1,13 @@
 <?php
 
-
 namespace Behamin\BResources\Tests;
-
 
 use stdClass;
 
 class ApiResponseTest extends TestCase
 {
     /** @test */
-    public function mainKeysExistTest()
+    public function mainKeysExistTest(): void
     {
         $resource = apiResponse()->data([])->get()->getData(true);
 
@@ -19,7 +17,7 @@ class ApiResponseTest extends TestCase
     }
 
     /** @test */
-    public function errorKeysExistTest()
+    public function errorKeysExistTest(): void
     {
         $resource = apiResponse()->data(array())->get()->getData(true);
         $errors = $resource['error'];
@@ -29,7 +27,7 @@ class ApiResponseTest extends TestCase
     }
 
     /** @test */
-    public function dataTest()
+    public function dataTest(): void
     {
         $resource =apiResponse()->data(null)->get()->getData(true);
         $this->assertNull($resource['data']);
@@ -38,12 +36,13 @@ class ApiResponseTest extends TestCase
             'key' => 'value'
         ];
         $resource = apiResponse()->data($data)->get()->getData(true);
+
         $this->assertArrayHasKey('key', $resource['data']);
         $this->assertEquals('value', $resource['data']['key']);
     }
 
     /** @test */
-    public function arrayDataTest()
+    public function arrayDataTest(): void
     {
         $data = [
             [
@@ -55,30 +54,34 @@ class ApiResponseTest extends TestCase
 
         ];
         $resource = apiResponse()->data($data)->get()->getData(true);
+
         $this->assertIsArray($resource['data']);
         $this->assertCount(2, $resource['data']);
     }
 
     /** @test */
-    public function emptyObjectDataToNullConversionTest()
+    public function emptyObjectDataToNullConversionTest(): void
     {
         $data = new stdClass();
         $resource = apiResponse()->data($data)->get()->getData(true);
+
         $this->assertNull($resource['data']);
     }
 
     /** @test */
-    public function messageTest()
+    public function messageTest(): void
     {
         $resource = apiResponse()->message('form submitted.')->get()->getData(true);
+
         $this->assertIsString($resource['message']);
         $this->assertEquals('form submitted.', $resource['message']);
     }
 
     /** @test */
-    public function errorMessageTest()
+    public function errorMessageTest(): void
     {
         $resource = apiResponse()->errors('invalid data.')->get()->getData(true);
+
         $this->assertIsString($resource['error']['message']);
         $this->assertEquals('invalid data.', $resource['error']['message']);
     }
