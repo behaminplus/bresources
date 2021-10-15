@@ -17,10 +17,10 @@ class BasicResource extends JsonResource
 
         $this->data = $this->resource['data'] ?? null;
         $this->count = $this->resource['count'] ?? null;
-        $this->sum = $this->resource['sum'] ?? null;
         $this->message = $this->resource['message'] ?? null;
         $this->errorMessage = $this->resource['error_message'] ?? null;
         $this->errors = $this->resource['errors'] ?? null;
+        $this->sum = $this->resource['sum'] ?? null;
 
         $this->finalizeData($transform);
     }
@@ -92,10 +92,11 @@ class BasicResource extends JsonResource
     {
         return [
             'data',
+            'count',
             'message',
-            'error',
-            'message',
+            'error_message',
             'errors',
+            'sum',
         ];
     }
 }
