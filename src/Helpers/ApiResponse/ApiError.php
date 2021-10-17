@@ -21,10 +21,15 @@ class ApiError extends Response
 
     protected function respond(): JsonResource
     {
-        return new BasicResource([
+        $data = [
             'error_message' => $this->errorMessage,
             'errors' => $this->errors,
             'message' => $this->getMessage()
-        ]);
+        ];
+
+        if ($this->getNext() != null) {
+            $data = $data + ["next" => $this->getNext()];
+        }
+        return new BasicResource($data);
     }
 }
