@@ -11,12 +11,19 @@ use Illuminate\Http\Response as HttpResponse;
 abstract class Response
 {
     private ?string $message;
+    private ?string $next;
     private int $status;
 
-    public function __construct(?string $message = null, int $status = HttpResponse::HTTP_OK)
+    public function __construct(?string $message = null, int $status = HttpResponse::HTTP_OK, ?string $next = "undefined")
     {
         $this->message = $message;
+        $this->next = $next;
         $this->status = $status;
+    }
+
+    public function getNext(): ?string
+    {
+        return $this->next;
     }
 
     protected function getMessage(): ?string
@@ -45,6 +52,12 @@ abstract class Response
     public function status(int $code): self
     {
         $this->status = $code;
+        return $this;
+    }
+
+    public function next(string $next): self
+    {
+        $this->next = $next;
         return $this;
     }
 }
