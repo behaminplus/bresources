@@ -14,7 +14,7 @@ abstract class Response
     private ?string $next;
     private int $status;
 
-    public function __construct(?string $message = null, int $status = HttpResponse::HTTP_OK, ?string $next = null)
+    public function __construct(?string $message = null, int $status = HttpResponse::HTTP_OK, ?string $next = "undefined")
     {
         $this->message = $message;
         $this->next = $next;

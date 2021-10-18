@@ -27,7 +27,7 @@ class ApiError extends Response
             'message' => $this->getMessage()
         ];
 
-        if ($this->getNext() != null) {
+        if ($this->getNext() !== "undefined") {
             $data = $data + ["next" => $this->getNext()];
         }
         return new BasicResource($data);

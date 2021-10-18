@@ -25,7 +25,7 @@ class ApiData extends Response
     protected function respond(): JsonResource
     {
         $data = ['data' => $this->data, 'message' => $this->getMessage()];
-        if ($this->getNext() != null) {
+        if ($this->getNext() !== "undefined") {
             $data = $data + ["next" => $this->getNext()];
         }
         return new BasicResource($data);

@@ -32,7 +32,7 @@ class ApiCollection extends Response
             'count' => $this->count,
             'message' => $this->getMessage()
         ];
-        if ($this->getNext() != null) {
+        if ($this->getNext() !== "undefined") {
             $data = $data + ["next" => $this->getNext()];
         }
         return new BasicResourceCollection($data);
