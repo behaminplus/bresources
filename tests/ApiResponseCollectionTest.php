@@ -87,4 +87,40 @@ class ApiResponseCollectionTest extends TestCase
         $this->assertIsString($resource['error']['message']);
         $this->assertEquals('invalid data.', $resource['error']['message']);
     }
+
+    /** @test */
+    public function nextCollectionTest()
+    {
+        $resource = apiResponse()->collection([])->next('https://debug.test')->get()->getData(true);
+
+        $this->assertIsString($resource['next']);
+        $this->assertEquals('https://debug.test', $resource['next']);
+    }
+
+    /** @test */
+    public function nextDataTest()
+    {
+        $resource = apiResponse()->data([])->next('https://debug.test')->get()->getData(true);
+
+        $this->assertIsString($resource['next']);
+        $this->assertEquals('https://debug.test', $resource['next']);
+    }
+
+    /** @test */
+    public function nextMessageTest()
+    {
+        $resource = apiResponse()->message('')->next('https://debug.test')->get()->getData(true);
+
+        $this->assertIsString($resource['next']);
+        $this->assertEquals('https://debug.test', $resource['next']);
+    }
+
+    /** @test */
+    public function nextErrorTest()
+    {
+        $resource = apiResponse()->errors('')->next('https://debug.test')->get()->getData(true);
+
+        $this->assertIsString($resource['next']);
+        $this->assertEquals('https://debug.test', $resource['next']);
+    }
 }

@@ -27,10 +27,14 @@ class ApiCollection extends Response
 
     protected function respond(): JsonResource
     {
-        return new BasicResourceCollection([
+        $data = [
             'data' => $this->items,
             'count' => $this->count,
             'message' => $this->getMessage()
-        ]);
+        ];
+        if ($this->getNext() !== "undefined") {
+            $data = $data + ["next" => $this->getNext()];
+        }
+        return new BasicResourceCollection($data);
     }
 }

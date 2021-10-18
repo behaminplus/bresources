@@ -15,6 +15,10 @@ class ApiMessage extends Response
 
     protected function respond(): JsonResource
     {
-        return new BasicResource(['message' => $this->getMessage()]);
+        $data = ['message' => $this->getMessage()];
+        if ($this->getNext() !== "undefined") {
+            $data = $data + ["next" => $this->getNext()];
+        }
+        return new BasicResource($data);
     }
 }

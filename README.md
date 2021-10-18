@@ -127,7 +127,7 @@ class PhoneController {
     public function delete(Phone $phone)
     {
         $phone->delete();
-        return apiResponse()->message('phone info.')->status(200)->get();
+        return apiResponse()->message('phone info.')->next('https://debut.test')->status(200)->get();
     }
 }
 ```
