@@ -34,7 +34,7 @@ class BasicResourceCollectionTest extends TestCase
 
         $this->assertArrayHasKey('items', $resourceData);
         $this->assertArrayHasKey('count', $resourceData);
-        $this->assertArrayHasKey('sum', $resourceData);
+        $this->assertArrayHasKey('sums', $resourceData);
     }
 
     /** @test */
@@ -70,23 +70,5 @@ class BasicResourceCollectionTest extends TestCase
         $resourceData = $resource['data'];
 
         $this->assertEquals(150, $resourceData['count']);
-    }
-
-    /** @test */
-    public function messageTest(): void
-    {
-        $resource = (new BasicResourceCollection(['message' => 'profile updated.']))->toArray();
-
-        $this->assertIsString($resource['message']);
-        $this->assertEquals('profile updated.', $resource['message']);
-    }
-
-    /** @test */
-    public function errorMessageTest(): void
-    {
-        $resource = (new BasicResourceCollection(['error_message' => 'invalid data.']))->toArray();
-
-        $this->assertIsString($resource['error']['message']);
-        $this->assertEquals('invalid data.', $resource['error']['message']);
     }
 }

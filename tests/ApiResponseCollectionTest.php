@@ -32,7 +32,7 @@ class ApiResponseCollectionTest extends TestCase
 
         $this->assertArrayHasKey('items', $resourceData);
         $this->assertArrayHasKey('count', $resourceData);
-        $this->assertArrayHasKey('sum', $resourceData);
+        $this->assertArrayHasKey('sums', $resourceData);
     }
 
     /** @test */
@@ -89,7 +89,7 @@ class ApiResponseCollectionTest extends TestCase
     }
 
     /** @test */
-    public function nextCollectionTest()
+    public function nextCollectionTest(): void
     {
         $resource = apiResponse()->collection([])->next('https://debug.test')->get()->getData(true);
 
@@ -98,7 +98,7 @@ class ApiResponseCollectionTest extends TestCase
     }
 
     /** @test */
-    public function nextDataTest()
+    public function nextDataTest(): void
     {
         $resource = apiResponse()->data([])->next('https://debug.test')->get()->getData(true);
 
@@ -107,7 +107,7 @@ class ApiResponseCollectionTest extends TestCase
     }
 
     /** @test */
-    public function nextMessageTest()
+    public function nextMessageTest(): void
     {
         $resource = apiResponse()->message('')->next('https://debug.test')->get()->getData(true);
 
@@ -116,7 +116,7 @@ class ApiResponseCollectionTest extends TestCase
     }
 
     /** @test */
-    public function nextErrorTest()
+    public function nextErrorTest(): void
     {
         $resource = apiResponse()->errors('')->next('https://debug.test')->get()->getData(true);
 
