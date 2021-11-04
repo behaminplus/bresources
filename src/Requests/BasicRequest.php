@@ -14,7 +14,7 @@ class BasicRequest extends FormRequest
     {
         throw new ValidationException($validator, response(new BasicResource([
             'error_message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
+            'errors' => $validator->errors()->toArray()
         ]), Response::HTTP_UNPROCESSABLE_ENTITY), $this->errorBag);
     }
 }

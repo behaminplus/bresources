@@ -2,9 +2,14 @@
 
 namespace {{ namespace }};
 
-{{ use }}
+use Behamin\BResources\Resources\BasicResourceCollection;
 
-class {{ class }} extends {{ extends }}
+class {{ class }} extends BasicResourceCollection
 {
-   {{ useTrait }}
+    public function transformDataItem($resource)
+    {
+        return [
+            //
+        ];
+    }
 }

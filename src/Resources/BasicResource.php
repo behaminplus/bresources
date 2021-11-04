@@ -8,27 +8,27 @@ use Illuminate\Support\Collection;
 
 class BasicResource extends JsonResource
 {
-    protected $transform;
-    protected $data, $message, $errorMessage, $errors, $count, $sum;
+    protected ?string $message;
+    protected ?string $errorMessage;
+    protected ?array $errors;
+    protected $data;
 
-    public function __construct($resource, $transform = false)
+    public function __construct($resource)
     {
         parent::__construct($resource);
 
         $this->data = $this->resource['data'] ?? null;
-        $this->count = $this->resource['count'] ?? null;
         $this->message = $this->resource['message'] ?? null;
         $this->errorMessage = $this->resource['error_message'] ?? null;
         $this->errors = $this->resource['errors'] ?? null;
-        $this->sum = $this->resource['sum'] ?? null;
 
-        $this->finalizeData($transform);
+        $this->data = $this->transformData();
     }
 
     public function toArray($request = null)
     {
         $data = [
-            'data' => $this->data,
+            'data' => $this->isEmptyObject($this->data) ? null : $this->data,
             'message' => $this->message,
             'error' => [
                 'message' => $this->errorMessage,
@@ -39,53 +39,41 @@ class BasicResource extends JsonResource
         return array_merge($data, Arr::except($this->resource, $this->getMainKeys()));
     }
 
-    protected function getArray($resource)
+    protected function transformDataItem($resource)
     {
-        if (is_bool($this->transform)) {
-            if (method_exists($resource, 'toArray')) {
-                return $resource->toArray();
-            }
-
-            return get_object_vars($resource);
-        }
-
-        $transform = is_string($this->transform) ? [$this->transform] : $this->transform;
-
-        if (!is_array($transform)) {
-            return $resource;
-        }
-
-        $data = [];
-        foreach ($transform as $key) {
-            if (is_array($resource)) {
-                $data[$key] = $resource[$key];
-            } else {
-                $data[$key] = data_get($resource, $key);
-            }
-        }
-
-        return $data;
+        return $resource;
     }
 
-    protected function finalizeData($transform): void
+    private function transformData()
     {
-        if (is_array($this->data) || $this->data instanceof Collection) {
-            $itemsCount = count($this->data);
-            if ($itemsCount > 0 && $transform) {
-                $this->transform = $transform;
-                $this->data = $this->getArray($this->data);
-            } elseif ($itemsCount === 0) {
-                $this->data = [];
-            }
-        } elseif (is_object($this->data)) {
-            $objectVarsCount = count(get_object_vars($this->data));
-            if ($objectVarsCount > 0 && $transform) {
-                $this->transform = $transform;
-                $this->data = $this->getArray($this->data);
-            } elseif ($objectVarsCount === 0) {
-                $this->data = null;
-            }
+        if ($this->data instanceof Collection) {
+            return $this->transformCollectionDataItems();
         }
+
+        if (is_array($this->data)) {
+            return $this->transformArrayDataItems();
+        }
+
+        return $this->transformDataItem($this->data);
+    }
+
+    private function transformArrayDataItems(): array
+    {
+        return array_map(function ($item) {
+            return $this->transformDataItem($item);
+        }, $this->data);
+    }
+
+    private function transformCollectionDataItems(): Collection
+    {
+        return $this->data->transform(function ($item) {
+            return $this->transformDataItem($item);
+        });
+    }
+
+    private function isEmptyObject($resource): bool
+    {
+        return is_object($resource) && !is_countable($resource) && empty(get_object_vars($resource));
     }
 
     private function getMainKeys(): array
