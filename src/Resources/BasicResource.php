@@ -8,7 +8,6 @@ use Illuminate\Support\Collection;
 
 class BasicResource extends JsonResource
 {
-    protected bool $transform;
     protected ?string $message;
     protected ?string $errorMessage;
     protected ?array $errors;
