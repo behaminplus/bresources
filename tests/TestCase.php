@@ -16,11 +16,11 @@ class TestCase extends BaseTestCase
 
     protected function getResourcePath(?string $resourceFileName = null): string
     {
-        return app_path("Http\Resources" . "\\{$resourceFileName}");
+        return app_path("Http/Resources"."/$resourceFileName");
     }
 
     protected function getRequestPath(?string $requestFileName = null): string
     {
-        return app_path("Http\Requests" . "\\{$requestFileName}");
+        return app_path("Http/Requests"."/$requestFileName");
     }
 }
