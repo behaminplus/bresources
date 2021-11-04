@@ -1,17 +1,22 @@
 [![License](https://poser.pugx.org/behamin/bresources/license)](//packagist.org/packages/behamin/bresources)
+[![Tests](https://github.com/omalizadeh/bresources/actions/workflows/tests.yml/badge.svg)](https://github.com/omalizadeh/bresources/actions/workflows/tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/behamin/bresources/v)](//packagist.org/packages/behamin/bresources)
 [![Total Downloads](https://poser.pugx.org/behamin/bresources/downloads)](//packagist.org/packages/behamin/bresources)
 
 # Behamin Resources
+
 Behamin standard formats for api responses.
 
 ## Installation
+
 ```bash
 composer require behamin/bresources
 ```
 
 ## Output Format
+
 Resources:
+
 ```json
 {
     "data": {
@@ -25,7 +30,9 @@ Resources:
     }
 }
 ```
+
 ResourceCollection:
+
 ```json
 {
     "data": {
@@ -40,7 +47,9 @@ ResourceCollection:
     }
 }
 ```
+
 On validation error for requests (with 422 status code):
+
 ```json
 {
     "data": null,
@@ -57,7 +66,9 @@ On validation error for requests (with 422 status code):
 ```
 
 ## Usage
-Create resources and requests with artisan commands and pass data, message, error_message or count to resources like following examples:
+
+Create resources and requests with artisan commands and pass data, message, error_message or count to resources like
+following examples:
 
 ```php
     public function index(EmailFilter $filters)
@@ -74,7 +85,10 @@ Create resources and requests with artisan commands and pass data, message, erro
         return response(new PhoneResource(['data' => $phone, 'message'=> 'phone info.']));
     }
 ```
-You can specify output fields from getArray() method of resource classes. Set transform variable as true so that resource class converts data using specified fields.
+
+You can specify output fields from getArray() method of resource classes. Set transform variable as true so that
+resource class converts data using specified fields.
+
 ```php
 <?php
 
@@ -131,27 +145,37 @@ class PhoneController {
     }
 }
 ```
+
 In above example **message** and **status** are optional, and their default value respectively are `null` and `200`.
 
 #### Resource
+
 ```bash
 php artisan make:bresource ResourceName
 ```
 
 #### Resource Collection
+
 For Resource and ResourceCollection (With same output):
+
 ```bash
 php artisan make:bresource ResourceName --collection
 ```
+
 ResourceCollection Only:
+
 ```bash
 php artisan make:bresource RescourceNameCollection
 ```
+
 Or:
+
 ```bash
 php artisan make:bcresource RescourceCollectionName
 ```
+
 #### Request
+
 ```bash
 php artisan make:brequest RequestName
 ```
