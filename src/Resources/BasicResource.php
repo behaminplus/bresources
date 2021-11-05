@@ -17,6 +17,8 @@ class BasicResource extends JsonResource
     {
         parent::__construct($resource);
 
+        static::withoutWrapping();
+
         $this->data = $this->resource['data'] ?? null;
         $this->message = $this->resource['message'] ?? null;
         $this->errorMessage = $this->resource['error_message'] ?? null;
