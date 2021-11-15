@@ -1,10 +1,10 @@
 <?php
 
-use Behamin\BResources\Helpers\ApiResponse\Api;
+use Behamin\BResources\Helpers\Api\ApiResponse;
 
 if (!function_exists('apiResponse')) {
-    function apiResponse(): Api
+    function apiResponse(): ApiResponse
     {
-        return new Api();
+        return new ApiResponse();
     }
 }

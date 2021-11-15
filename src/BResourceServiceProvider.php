@@ -2,10 +2,9 @@
 
 namespace Behamin\BResources;
 
-use Illuminate\Support\ServiceProvider;
-use Behamin\BResources\Console\MakeBResourceCommand;
-use Behamin\BResources\Console\MakeBResourceCollectionCommand;
 use Behamin\BResources\Console\MakeBRequestCommand;
+use Behamin\BResources\Console\MakeBResourceCommand;
+use Illuminate\Support\ServiceProvider;
 
 class BResourceServiceProvider extends ServiceProvider
 {
@@ -13,7 +12,6 @@ class BResourceServiceProvider extends ServiceProvider
     {
         $this->commands([
             MakeBResourceCommand::class,
-            MakeBResourceCollectionCommand::class,
             MakeBRequestCommand::class
         ]);
     }
