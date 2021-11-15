@@ -23,10 +23,10 @@ Resources:
         "id": 1,
         "email": "test@test.com"
     },
-    "message": "message goes here",
+    "message": "message",
     "error": {
-        "message": "error message",
-        "errors": []
+        "message": "or error message",
+        "errors": null
     }
 }
 ```
@@ -40,10 +40,10 @@ ResourceCollection:
         "count": 0,
         "sum": null
     },
-    "message": "message goes here",
+    "message": null,
     "error": {
-        "message": "error message",
-        "errors": []
+        "message": null,
+        "errors": null
     }
 }
 ```
@@ -75,19 +75,19 @@ following examples:
     {
         list($emails, $count) = Email::filter($filters);
         $emails = $emails->get();
-        return response(new EmailResourceCollection(['data' => $emails, 'count' => $count]));
+        
+        return EmailResource::collection(['data' => $emails, 'count' => $count]);
     }
 ```
 
 ```php
-    public function show(Phone $phone)
+    public function show(Email $email)
     {
-        return response(new PhoneResource(['data' => $phone, 'message'=> 'phone info.']));
+        return new EmailResource(['data' => $email, 'message'=> 'email info.']);
     }
 ```
 
-You can specify output fields from getArray() method of resource classes. Set transform variable as true so that
-resource class converts data using specified fields.
+You can specify output fields from transformDataItem() method of resource classes.
 
 ```php
 <?php
@@ -96,19 +96,14 @@ namespace App\Http\Resources;
 
 use Behamin\BResources\Resources\BasicResource;
 
-class PhoneResource extends BasicResource
+class EmailResource extends BasicResource
 {
-    public function __construct($resource)
-    {
-        parent::__construct($resource, true);
-    }
-
-    protected function getArray($resource)
+    protected function transformDataItem($item)
     {
         return [
-            'id' => $resource->id,
-            'phone' => $resource->phone,
-            'status' => $resource->status
+            'id' => $item->id,
+            'email' => $item->email,
+            'status' => $item->status
         ];
     }
 }
@@ -122,25 +117,29 @@ class PhoneController {
 
     public function show(Phone $phone)
     {
-        return apiResponse()->message('phone info.')->status(200)->data($phone)->get();
+        return apiResponse()->data($phone)->message('phone info.')->status(200)->get();
     }
     
     public function index() {
         $phones = Phone::all();
-        return apiResponse()->message('phone info.')->status(200)->collection($phones, $phones->count())->get();
+        
+        return apiResponse()->collection($phones, $phones->count())->message('phone info.')->status(200)->get();
     }
     
     public function update(Request $request, Phone $phone) {
         $isUpdated = $phone->update($request->all());
+        
         if (!$isUpdated) {
             return apiResponse()->errors('phone is not updated');
         }
-        return apiResponse()->message('phone is updated')->data($phone)->get();
+        
+        return apiResponse()->data($phone)->message('phone is updated')->get();
     }
     
     public function delete(Phone $phone)
     {
         $phone->delete();
+        
         return apiResponse()->message('phone info.')->next('https://debut.test')->status(200)->get();
     }
 }
@@ -151,31 +150,11 @@ In above example **message** and **status** are optional, and their default valu
 #### Resource
 
 ```bash
-php artisan make:bresource ResourceName
-```
-
-#### Resource Collection
-
-For Resource and ResourceCollection (With same output):
-
-```bash
-php artisan make:bresource ResourceName --collection
-```
-
-ResourceCollection Only:
-
-```bash
-php artisan make:bresource RescourceNameCollection
-```
-
-Or:
-
-```bash
-php artisan make:bcresource RescourceCollectionName
+php artisan make:bresource ResourceClassName
 ```
 
 #### Request
 
 ```bash
-php artisan make:brequest RequestName
+php artisan make:brequest RequestClassName
 ```
