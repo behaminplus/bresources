@@ -7,35 +7,47 @@ use Illuminate\Support\Facades\File;
 
 class CommandTest extends TestCase
 {
+    protected string $resourceFileName = 'TestResource.php';
+    protected string $requestFileName = 'TestRequest.php';
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->removeRequestAndResourceFile();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->removeRequestAndResourceFile();
+    }
+
     /** @test */
     public function makeBResourceCommandCreatesResourceClassTest(): void
     {
-        $resourceFileName = 'TestResource.php';
-
-        if (File::exists($this->getResourcePath($resourceFileName))) {
-            unlink($this->getResourcePath($resourceFileName));
-        }
-
-        $this->assertFalse(File::exists($this->getResourcePath($resourceFileName)));
-
         Artisan::call('make:bresource TestResource');
 
-        $this->assertTrue(File::exists($this->getResourcePath($resourceFileName)));
+        $this->assertTrue(File::exists($this->getResourcePath($this->resourceFileName)));
     }
 
     /** @test */
     public function makeBRequestCommandCreatesRequestClassTest(): void
     {
-        $requestFileName = 'TestRequest.php';
-
-        if (File::exists($this->getRequestPath($requestFileName))) {
-            unlink($this->getRequestPath($requestFileName));
-        }
-
-        $this->assertFalse(File::exists($this->getRequestPath($requestFileName)));
-
         Artisan::call('make:brequest TestRequest');
 
-        $this->assertTrue(File::exists($this->getRequestPath($requestFileName)));
+        $this->assertTrue(File::exists($this->getRequestPath($this->requestFileName)));
+    }
+
+    protected function removeRequestAndResourceFile(): void
+    {
+        if (File::exists($this->getResourcePath($this->resourceFileName))) {
+            unlink($this->getResourcePath($this->resourceFileName));
+        }
+
+        if (File::exists($this->getResourcePath($this->requestFileName))) {
+            unlink($this->getResourcePath($this->requestFileName));
+        }
     }
 }

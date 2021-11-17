@@ -6,7 +6,7 @@ use Behamin\BResources\Resources\BasicResource;
 
 class {{ class }} extends BasicResource
 {
-    protected function transformDataItem($item)
+    protected function transformDataItem($item): array
     {
         return [
             //
