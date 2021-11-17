@@ -28,20 +28,6 @@ class BasicResourceTest extends TestCase
     }
 
     /** @test */
-    public function dataTest(): void
-    {
-        $resource = (new BasicResource(['data' => null]))->toArray();
-        $this->assertNull($resource['data']);
-
-        $data = [
-            'key' => 'value'
-        ];
-        $resource = (new BasicResource(['data' => $data]))->toArray();
-        $this->assertArrayHasKey('key', $resource['data']);
-        $this->assertEquals('value', $resource['data']['key']);
-    }
-
-    /** @test */
     public function arrayDataTest(): void
     {
         $data = [
@@ -105,5 +91,21 @@ class BasicResourceTest extends TestCase
         $this->assertArrayHasKey('back', $resource);
         $this->assertEquals('path', $resource['next']);
         $this->assertEquals('previous', $resource['back']);
+    }
+
+    /** @test */
+    public function makeResourceTest(): void
+    {
+        $resource = BasicResource::make([
+            'data' => [
+                'id' => 1,
+            ],
+            'message' => 'message'
+        ])->toArray();
+
+        $this->assertArrayHasKey('data', $resource);
+        $this->assertArrayHasKey('message', $resource);
+        $this->assertArrayHasKey('error', $resource);
+        $this->assertEquals(1, $resource['data']['id']);
     }
 }

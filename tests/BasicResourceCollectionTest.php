@@ -2,14 +2,14 @@
 
 namespace Behamin\BResources\Tests;
 
-use Behamin\BResources\Resources\BasicResourceCollection;
+use Behamin\BResources\Resources\BasicResource;
 
 class BasicResourceCollectionTest extends TestCase
 {
     /** @test */
     public function mainKeysExistTest(): void
     {
-        $resource = (new BasicResourceCollection(['data' => []]))->toArray();
+        $resource = BasicResource::collection(['data' => []])->toArray();
 
         $this->assertArrayHasKey('data', $resource);
         $this->assertArrayHasKey('message', $resource);
@@ -19,7 +19,7 @@ class BasicResourceCollectionTest extends TestCase
     /** @test */
     public function errorKeysExistTest(): void
     {
-        $resource = (new BasicResourceCollection(['data' => []]))->toArray();
+        $resource = BasicResource::collection(['data' => []])->toArray();
         $errors = $resource['error'];
 
         $this->assertArrayHasKey('errors', $errors);
@@ -29,12 +29,12 @@ class BasicResourceCollectionTest extends TestCase
     /** @test */
     public function collectionKeysExistTest(): void
     {
-        $resource = (new BasicResourceCollection(['data' => []]))->toArray();
+        $resource = BasicResource::collection(['data' => []])->toArray();
         $resourceData = $resource['data'];
 
         $this->assertArrayHasKey('items', $resourceData);
         $this->assertArrayHasKey('count', $resourceData);
-        $this->assertArrayHasKey('sum', $resourceData);
+        $this->assertArrayHasKey('sums', $resourceData);
     }
 
     /** @test */
@@ -49,7 +49,7 @@ class BasicResourceCollectionTest extends TestCase
             ]
 
         ];
-        $resource = (new BasicResourceCollection(['data' => $data]))->toArray();
+        $resource = BasicResource::collection(['data' => $data])->toArray();
         $resourceData = $resource['data'];
 
         $this->assertIsArray($resourceData['items']);
@@ -66,27 +66,9 @@ class BasicResourceCollectionTest extends TestCase
                 'key' => 'value'
             ]
         ];
-        $resource = (new BasicResourceCollection(['data' => $data, 'count' => 150]))->toArray();
+        $resource = BasicResource::collection(['data' => $data, 'count' => 150])->toArray();
         $resourceData = $resource['data'];
 
         $this->assertEquals(150, $resourceData['count']);
-    }
-
-    /** @test */
-    public function messageTest(): void
-    {
-        $resource = (new BasicResourceCollection(['message' => 'profile updated.']))->toArray();
-
-        $this->assertIsString($resource['message']);
-        $this->assertEquals('profile updated.', $resource['message']);
-    }
-
-    /** @test */
-    public function errorMessageTest(): void
-    {
-        $resource = (new BasicResourceCollection(['error_message' => 'invalid data.']))->toArray();
-
-        $this->assertIsString($resource['error']['message']);
-        $this->assertEquals('invalid data.', $resource['error']['message']);
     }
 }

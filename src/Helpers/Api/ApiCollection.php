@@ -1,40 +1,38 @@
 <?php
 
-namespace Behamin\BResources\Helpers\ApiResponse;
+namespace Behamin\BResources\Helpers\Api;
 
-use Behamin\BResources\Resources\BasicResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApiCollection extends Response
 {
-    /**
-     * @var mixed
-     */
     private $items;
     private ?int $count;
 
-    /**
-     * @param  mixed  $items
-     * @param  null|int  $count
-     * @return $this
-     */
-    public function collection($items, ?int $count): self
+    public function collection($items, ?int $count = null): self
     {
         $this->items = $items;
         $this->count = $count;
+
         return $this;
     }
 
     protected function respond(): JsonResource
     {
-        $data = [
+        $resource = [
             'data' => $this->items,
             'count' => $this->count,
             'message' => $this->getMessage()
         ];
+
         if ($this->getNext() !== "undefined") {
-            $data = $data + ["next" => $this->getNext()];
+            $resource += [
+                "next" => $this->getNext()
+            ];
         }
-        return new BasicResourceCollection($data);
+
+        $jsonResource = $this->getJsonResource();
+
+        return $jsonResource::collection($resource);
     }
 }

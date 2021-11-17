@@ -24,22 +24,6 @@ class CommandTest extends TestCase
     }
 
     /** @test */
-    public function makeBResourceCollectionCommandCreatesResourceCollectionClassTest(): void
-    {
-        $resourceFileName = 'TestResourceCollection.php';
-
-        if (File::exists($this->getResourcePath($resourceFileName))) {
-            unlink($this->getResourcePath($resourceFileName));
-        }
-
-        $this->assertFalse(File::exists($this->getResourcePath($resourceFileName)));
-
-        Artisan::call('make:bcresource TestResourceCollection');
-
-        $this->assertTrue(File::exists($this->getResourcePath($resourceFileName)));
-    }
-
-    /** @test */
     public function makeBRequestCommandCreatesRequestClassTest(): void
     {
         $requestFileName = 'TestRequest.php';
