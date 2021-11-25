@@ -70,7 +70,11 @@ class BasicResource extends JsonResource
         }
 
         if (is_array($this->data)) {
-            return $this->transformArrayDataItems();
+            if (array_is_list($this->data)) {
+                return $this->transformArrayDataItems();
+            }
+
+            return $this->data;
         }
 
         return $this->transformDataItem($this->data);
