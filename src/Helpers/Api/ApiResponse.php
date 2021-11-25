@@ -4,6 +4,11 @@ namespace Behamin\BResources\Helpers\Api;
 
 class ApiResponse
 {
+    public function collection($items, ?int $count = null): ApiCollection
+    {
+        return (new ApiCollection())->collection($items, $count);
+    }
+
     public function data($data): ApiData
     {
         return (new ApiData())->data($data);
@@ -14,9 +19,14 @@ class ApiResponse
         return (new ApiData())->message($message);
     }
 
-    public function collection($items, ?int $count = null): ApiCollection
+    public function next(string $next): ApiData
     {
-        return (new ApiCollection())->collection($items, $count);
+        return (new ApiData())->next($next);
+    }
+
+    public function back(string $back): ApiData
+    {
+        return (new ApiData())->back($back);
     }
 
     public function errors(string $errorMessage, ?array $errors = null): ApiError

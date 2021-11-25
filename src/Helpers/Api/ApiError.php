@@ -25,9 +25,15 @@ class ApiError extends Response
             'message' => $this->getMessage()
         ];
 
-        if ($this->getNext() !== self::UNDEFINED_NEXT) {
+        if ($this->getNext() !== self::UNDEFINED) {
             $resource += [
                 'next' => $this->getNext()
+            ];
+        }
+
+        if ($this->getBack() !== self::UNDEFINED) {
+            $resource += [
+                'back' => $this->getBack()
             ];
         }
 

@@ -9,22 +9,25 @@ use Illuminate\Http\Response as HttpResponse;
 
 abstract class Response
 {
-    protected const UNDEFINED_NEXT = 'undefined';
+    protected const UNDEFINED = 'undefined';
 
     protected string $jsonResource = BasicResource::class;
 
     private ?string $message;
     private ?string $next;
+    private ?string $back;
     private int $status;
 
     public function __construct(
         ?string $message = null,
         int $status = HttpResponse::HTTP_OK,
-        ?string $next = self::UNDEFINED_NEXT
+        ?string $next = self::UNDEFINED,
+        ?string $back = self::UNDEFINED
     ) {
         $this->message = $message;
-        $this->next = $next;
         $this->status = $status;
+        $this->next = $next;
+        $this->back = $back;
     }
 
     public function message(string $message): self
@@ -44,6 +47,13 @@ abstract class Response
     public function next(string $next): self
     {
         $this->next = $next;
+
+        return $this;
+    }
+
+    public function back(string $back): self
+    {
+        $this->back = $back;
 
         return $this;
     }
@@ -73,6 +83,11 @@ abstract class Response
     protected function getNext(): ?string
     {
         return $this->next;
+    }
+
+    protected function getBack(): ?string
+    {
+        return $this->back;
     }
 
     protected function getJsonResource(): string

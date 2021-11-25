@@ -29,7 +29,7 @@ class ApiResponseTest extends TestCase
     /** @test */
     public function dataTest(): void
     {
-        $resource =apiResponse()->data(null)->get()->getData(true);
+        $resource = apiResponse()->data(null)->get()->getData(true);
         $this->assertNull($resource['data']);
 
         $data = [
@@ -66,6 +66,24 @@ class ApiResponseTest extends TestCase
         $resource = apiResponse()->data($data)->get()->getData(true);
 
         $this->assertNull($resource['data']);
+    }
+
+    /** @test */
+    public function nextTest(): void
+    {
+        $resource = apiResponse()->next('next/path')->get()->getData(true);
+
+        $this->assertIsString($resource['next']);
+        $this->assertEquals('next/path', $resource['next']);
+    }
+
+    /** @test */
+    public function backTest(): void
+    {
+        $resource = apiResponse()->back('prev/path')->get()->getData(true);
+
+        $this->assertIsString($resource['back']);
+        $this->assertEquals('prev/path', $resource['back']);
     }
 
     /** @test */
