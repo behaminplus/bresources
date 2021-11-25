@@ -31,6 +31,12 @@ class ApiCollection extends Response
             ];
         }
 
+        if ($this->getBack() !== "undefined") {
+            $resource += [
+                "back" => $this->getBack()
+            ];
+        }
+
         $jsonResource = $this->getJsonResource();
 
         return $jsonResource::collection($resource);

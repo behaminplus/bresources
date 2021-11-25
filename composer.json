@@ -52,6 +52,9 @@
             ]
         }
     },
+    "scripts": {
+        "test": "vendor/bin/phpunit --colors=always"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
