@@ -8,11 +8,13 @@ class ApiCollection extends Response
 {
     private $items;
     private ?int $count;
+    private ?array $sums;
 
-    public function collection($items, ?int $count = null): self
+    public function collection($items, ?int $count = null, ?array $sums = null): self
     {
         $this->items = $items;
         $this->count = $count;
+        $this->sums = $sums;
 
         return $this;
     }
@@ -22,6 +24,7 @@ class ApiCollection extends Response
         $resource = [
             'data' => $this->items,
             'count' => $this->count,
+            'sums' => $this->sums,
             'message' => $this->getMessage()
         ];
 
