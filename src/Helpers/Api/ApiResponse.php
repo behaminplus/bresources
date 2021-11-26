@@ -4,9 +4,9 @@ namespace Behamin\BResources\Helpers\Api;
 
 class ApiResponse
 {
-    public function collection($items, ?int $count = null): ApiCollection
+    public function collection($items, ?int $count = null, ?array $sums = null): ApiCollection
     {
-        return (new ApiCollection())->collection($items, $count);
+        return (new ApiCollection())->collection($items, $count, $sums);
     }
 
     public function data($data): ApiData
