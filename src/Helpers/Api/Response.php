@@ -98,7 +98,7 @@ abstract class Response implements Responsable
 
     abstract protected function respond(): JsonResource;
 
-    public function toResponse($request): JsonResponse
+    public function toResponse($request = null): JsonResponse
     {
         return $this->get();
     }

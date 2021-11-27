@@ -22,7 +22,7 @@ class ApiResponseTest extends TestCase
     {
         $resource = apiResponse()->data([]);
         $this->assertInstanceOf(Responsable::class, $resource);
-        $this->assertEquals(200,$resource->toResponse(request())->getStatusCode());
+        $this->assertEquals(200,$resource->toResponse()->getStatusCode());
     }
 
     /** @test */
@@ -30,7 +30,7 @@ class ApiResponseTest extends TestCase
     {
         $resource = apiResponse()->data([])->status(201);
         $this->assertInstanceOf(Responsable::class, $resource);
-        $this->assertNotEquals(200,$resource->toResponse(request())->getStatusCode());
+        $this->assertNotEquals(200,$resource->toResponse()->getStatusCode());
     }
 
     /** @test */
