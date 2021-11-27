@@ -17,7 +17,7 @@ class ApiResponseCollectionTest extends TestCase
     }
 
     /** @test */
-    public function withoutGetTerminatorIsResponsableTest(): void
+    public function apiResponseClassIsResponsableTest(): void
     {
         $resource = apiResponse()->collection([]);
         $this->assertInstanceOf(Responsable::class, $resource);
@@ -25,7 +25,7 @@ class ApiResponseCollectionTest extends TestCase
     }
 
     /** @test */
-    public function withoutGetTerminatorWithStatusIsResponsableTest(): void
+    public function apiResponseClassWithStatusIsResponsableTest(): void
     {
         $resource = apiResponse()->collection([])->status(201);
         $this->assertInstanceOf(Responsable::class, $resource);
