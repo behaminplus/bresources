@@ -4,10 +4,11 @@ namespace Behamin\BResources\Helpers\Api;
 
 use Behamin\BResources\Resources\BasicResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response as HttpResponse;
 
-abstract class Response
+abstract class Response implements Responsable
 {
     protected const UNDEFINED = 'undefined';
 
@@ -96,4 +97,9 @@ abstract class Response
     }
 
     abstract protected function respond(): JsonResource;
+
+    public function toResponse($request = null): JsonResponse
+    {
+        return $this->get();
+    }
 }

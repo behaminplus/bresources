@@ -2,6 +2,8 @@
 
 namespace Behamin\BResources\Tests;
 
+use Illuminate\Contracts\Support\Responsable;
+
 class ApiResponseCollectionTest extends TestCase
 {
     /** @test */
@@ -12,6 +14,22 @@ class ApiResponseCollectionTest extends TestCase
         $this->assertArrayHasKey('data', $resource);
         $this->assertArrayHasKey('message', $resource);
         $this->assertArrayHasKey('error', $resource);
+    }
+
+    /** @test */
+    public function apiResponseClassIsResponsableTest(): void
+    {
+        $resource = apiResponse()->collection([]);
+        $this->assertInstanceOf(Responsable::class, $resource);
+        $this->assertEquals(200,$resource->toResponse()->getStatusCode());
+    }
+
+    /** @test */
+    public function apiResponseClassWithStatusIsResponsableTest(): void
+    {
+        $resource = apiResponse()->collection([])->status(201);
+        $this->assertInstanceOf(Responsable::class, $resource);
+        $this->assertNotEquals(200,$resource->toResponse()->getStatusCode());
     }
 
     /** @test */
