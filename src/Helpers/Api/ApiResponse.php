@@ -14,22 +14,22 @@ class ApiResponse
         return (new ApiData())->data($data);
     }
 
-    public function message(string $message): ApiData
+    public function message(?string $message): ApiData
     {
         return (new ApiData())->message($message);
     }
 
-    public function next(string $next): ApiData
+    public function next(?string $next): ApiData
     {
         return (new ApiData())->next($next);
     }
 
-    public function back(string $back): ApiData
+    public function back(?string $back): ApiData
     {
         return (new ApiData())->back($back);
     }
 
-    public function errors(string $errorMessage, ?array $errors = null): ApiError
+    public function errors(?string $errorMessage, ?array $errors = null): ApiError
     {
         return (new ApiError())->errors($errorMessage, $errors);
     }
