@@ -6,10 +6,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApiError extends Response
 {
-    private string $errorMessage;
+    private ?string $errorMessage;
     private ?array $errors;
 
-    public function errors(string $errorMessage, ?array $errors = null): self
+    public function errors(?string $errorMessage, ?array $errors = null): self
     {
         $this->errorMessage = $errorMessage;
         $this->errors = $errors;

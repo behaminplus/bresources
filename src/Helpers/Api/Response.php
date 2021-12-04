@@ -31,7 +31,7 @@ abstract class Response implements Responsable
         $this->back = $back;
     }
 
-    public function message(string $message): self
+    public function message(?string $message): self
     {
         $this->message = $message;
 
@@ -45,14 +45,14 @@ abstract class Response implements Responsable
         return $this;
     }
 
-    public function next(string $next): self
+    public function next(?string $next): self
     {
         $this->next = $next;
 
         return $this;
     }
 
-    public function back(string $back): self
+    public function back(?string $back): self
     {
         $this->back = $back;
 
