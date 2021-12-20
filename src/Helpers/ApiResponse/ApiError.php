@@ -9,10 +9,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApiError extends Response
 {
-    private string $errorMessage;
-    private array $errors;
+    private ?string $errorMessage;
+    private ?array $errors;
 
-    public function errors(string $errorMessage, array $errors = []): self
+    public function errors(?string $errorMessage, ?array $errors = []): self
     {
         $this->errorMessage = $errorMessage;
         $this->errors = $errors;
@@ -28,7 +28,7 @@ class ApiError extends Response
         ];
 
         if ($this->getNext() !== "undefined") {
-            $data = $data + ["next" => $this->getNext()];
+            $data += ["next" => $this->getNext()];
         }
         return new BasicResource($data);
     }
