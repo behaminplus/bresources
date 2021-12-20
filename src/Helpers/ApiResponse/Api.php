@@ -14,7 +14,7 @@ class Api
         return (new ApiCollection())->collection($items, $count);
     }
 
-    public function errors(string $errorMessage, array $errors = []): ApiError
+    public function errors(?string $errorMessage, ?array $errors = []): ApiError
     {
         return (new ApiError())->errors($errorMessage, $errors);
     }
