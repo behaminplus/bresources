@@ -38,7 +38,7 @@
         ]
     },
     "require-dev": {
-        "orchestra/testbench": "^6.24"
+        "orchestra/testbench": "^6.24|^7.0"
     },
     "autoload-dev": {
         "psr-4": {
@@ -53,7 +53,7 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit --colors=always"
+        "test": "phpunit --colors=always"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
