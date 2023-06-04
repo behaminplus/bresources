@@ -25,9 +25,9 @@
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^7.4 || ^8.0",
         "ext-json": "*",
-        "laravel/framework": "^8.67|^9.0|^10.0"
+        "laravel/framework": "^8.67 || ^9.52 || ^10.13"
     },
     "autoload": {
         "psr-4": {
@@ -38,7 +38,7 @@
         ]
     },
     "require-dev": {
-        "orchestra/testbench": "^6.24|^7.0"
+        "orchestra/testbench": "^v6.27.1 || ^7.24 || ^8.5"
     },
     "autoload-dev": {
         "psr-4": {
