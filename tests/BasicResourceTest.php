@@ -2,8 +2,8 @@
 
 namespace Behamin\BResources\Tests;
 
-use stdClass;
 use Behamin\BResources\Resources\BasicResource;
+use stdClass;
 
 class BasicResourceTest extends TestCase
 {
@@ -50,9 +50,11 @@ class BasicResourceTest extends TestCase
         $data = (object) [
             'key' => 'value'
         ];
+
         $resource = (new BasicResource(['data' => $data]))->toArray();
+
         $this->assertIsObject($resource['data']);
-        $this->assertObjectHasAttribute('key', $resource['data']);
+        $this->assertTrue(isset($resource['data']->key));
     }
 
     /** @test */
